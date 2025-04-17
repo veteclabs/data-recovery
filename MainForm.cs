@@ -1,4 +1,5 @@
-﻿using DataRecorvery.Configurations;
+﻿using DataRecorvery.App.Services;
+using DataRecorvery.Configurations;
 using DataRecorvery.Domain.Interfaces;
 using DataRecorvery.Domain.Models;
 using DataRecorvery.Infrastructure.Database;
@@ -22,12 +23,9 @@ namespace DataRecorvery
     {
 
         SettingsConfig _settings;
-        private List<InfluxDataPoint> _influxDataPoints;
-        private List<MariaDataPoint> _mariaDataPoints;
 
         private DateTime StartDate => deStartDate.DateTime;
         private DateTime EndDate => deEndDate.DateTime;
-        private List<string> SelectedTagNames => GetCheckedTags().Select(t => t.TagName).ToList();
         private int ProjNodeId => int.Parse(_settings.Scada.ProjNodeId);
         public MainForm()
         {
@@ -112,7 +110,7 @@ namespace DataRecorvery
             {
                 var influx = _settings.Influxdb;
                 var repo = new InfluxTagRepository(influx.Url, influx.Token, influx.Organizations, influx.Buckets);
-                var dataPoints = repo.GetTagData(SelectedTagNames, StartDate, EndDate);
+                var dataPoints = repo.GetTagData(GetSelectedTagNames(), StartDate, EndDate);
 
                 BindDataToGridSafe(gcInfluxdb, gvInfluxdb, dataPoints);
 
@@ -127,7 +125,7 @@ namespace DataRecorvery
             return Task.Run(() =>
             {
                 var repo = new MariaTagRepository(_settings.DatabaseConfig.ConnectionString);
-                var dataPoints = repo.GetTagData(SelectedTagNames, StartDate, EndDate, ProjNodeId);
+                var dataPoints = repo.GetTagData(GetSelectedTagNames(), StartDate, EndDate, ProjNodeId);
 
                 BindDataToGridSafe(gcDatabase, gvDatabase, dataPoints);
 
@@ -135,7 +133,20 @@ namespace DataRecorvery
                 return dataPoints;
             });
         }
-     
+        private List<string> GetSelectedTagNames()
+        {
+            if (gcTags.InvokeRequired)
+            {
+                return (List<string>)gcTags.Invoke(new Func<List<string>>(() =>
+                    GetCheckedTags().Select(t => t.TagName).ToList()
+                ));
+            }
+            else
+            {
+                return GetCheckedTags().Select(t => t.TagName).ToList();
+            }
+        }
+
         private List<Tags> GetCheckedTags()
         {
             var selectedRows = gvTags.GetSelectedRows();
@@ -181,19 +192,19 @@ namespace DataRecorvery
         }
         private void LoadCompareData(List<InfluxDataPoint> influxData, List<MariaDataPoint> mariaData)
         {
-            var compared = CompareTagData(influxData, mariaData);
-            BindDataToGrid(gcCompare,gvCompare,compared);
+            _compared = CompareTagData(influxData, mariaData);
+            BindDataToGrid(gcCompare,gvCompare,_compared);
             gvCompare.RowStyle -= gvCompare_RowStyle;
             gvCompare.RowStyle += gvCompare_RowStyle;
 
-            int firstDiffRowHandle = compared.FindIndex(r => r.Diff.HasValue && Math.Abs(r.Diff.Value) > 0.0001);
+            int firstDiffRowHandle = _compared.FindIndex(r => r.Diff.HasValue && Math.Abs(r.Diff.Value) > 0.0001);
             if (firstDiffRowHandle >= 0)
             {
                 gvCompare.FocusedRowHandle = firstDiffRowHandle;
                 gvCompare.TopRowIndex = firstDiffRowHandle;
             }
         }
-
+        List<TagComparisonPoint> _compared;
 
         public List<TagComparisonPoint> CompareTagData(
     List<InfluxDataPoint> influxData,
@@ -236,6 +247,21 @@ namespace DataRecorvery
         private void btnRecovery_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnInterpolation_Click(object sender, EventArgs e)
+        {
+            LoadInterpolatedData();
+        }
+        private void LoadInterpolatedData()
+        {
+            var data = _compared; // Influx + Maria 머지된 리스트
+            var interpolated = new InterpolationService().Interpolate(data);
+            gcInterpolation.DataSource = interpolated;
+
+            gvInterpolation.BestFitColumns();
+            gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
         }
     }
 }

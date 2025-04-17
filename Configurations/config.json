@@ -1,10 +1,23 @@
 {
-  "exclude": [
-    "**/bin",
-    "**/bower_components",
-    "**/jspm_packages",
-    "**/node_modules",
-    "**/obj",
-    "**/platforms"
-  ]
+  "DatabaseConfig": {
+    "Host": "localhost",
+    "Port": "3725",
+    "User": "root",
+    "Password": "vetec3721",
+    "Database": "tagdata",
+    "ConnectionString": "Server=localhost;Port=3725;Database=tagdata;Uid=root;Pwd=vetec3721;"
+  },
+  "Influxdb": {
+    "Url": "http://localhost:8886",
+    "Token": "lML2Reb1-I6kPBsnZR3oY051TJzBbfu-jzZizdZetamn1XT-EJ3J02qvRVDCuvAT3kYbg_ZW4s3v-WBmlzBykg==",
+    "Username": "admin",
+    "Password": "vetec3721!",
+    "Organizations": "primary",
+    "Buckets": "history"
+  },
+  "Scada": {
+    "FilePath": "C:\\WebAccess\\Node\\config\\bwcfg.mdb",
+    "ProjNodeId": "1",
+    "ConnectionPath": "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\WebAccess\\Node\\config\\bwcfg.mdb;"
+  }
 }

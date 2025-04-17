@@ -42,7 +42,7 @@
             this.deEndDate = new DevExpress.XtraEditors.DateEdit();
             this.btnRecovery = new DevExpress.XtraEditors.SimpleButton();
             this.btnSearch = new DevExpress.XtraEditors.SimpleButton();
-            this.btnDataValidation = new DevExpress.XtraEditors.SimpleButton();
+            this.btnInterpolation = new DevExpress.XtraEditors.SimpleButton();
             this.btnSettingReload = new DevExpress.XtraEditors.SimpleButton();
             this.checkEdit1 = new DevExpress.XtraEditors.CheckEdit();
             this.checkEdit2 = new DevExpress.XtraEditors.CheckEdit();
@@ -61,6 +61,9 @@
             this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.gcInterpolation = new DevExpress.XtraGrid.GridControl();
+            this.gvInterpolation = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gcCompare)).BeginInit();
@@ -92,16 +95,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gcInterpolation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gvInterpolation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
             this.SuspendLayout();
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(692, 12);
+            this.simpleButton1.Location = new System.Drawing.Point(979, 12);
             this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(462, 22);
+            this.simpleButton1.Size = new System.Drawing.Size(572, 22);
             this.simpleButton1.StyleController = this.layoutControl1;
             this.simpleButton1.TabIndex = 0;
-            this.simpleButton1.Text = "Settings";
+            this.simpleButton1.Text = "설정";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // layoutControl1
@@ -115,24 +121,25 @@
             this.layoutControl1.Controls.Add(this.deEndDate);
             this.layoutControl1.Controls.Add(this.btnRecovery);
             this.layoutControl1.Controls.Add(this.btnSearch);
-            this.layoutControl1.Controls.Add(this.btnDataValidation);
+            this.layoutControl1.Controls.Add(this.btnInterpolation);
             this.layoutControl1.Controls.Add(this.btnSettingReload);
             this.layoutControl1.Controls.Add(this.checkEdit1);
             this.layoutControl1.Controls.Add(this.checkEdit2);
+            this.layoutControl1.Controls.Add(this.gcInterpolation);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl1.Location = new System.Drawing.Point(0, 0);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1166, 715);
+            this.layoutControl1.Size = new System.Drawing.Size(1563, 715);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
             // 
             // gcCompare
             // 
-            this.gcCompare.Location = new System.Drawing.Point(902, 163);
+            this.gcCompare.Location = new System.Drawing.Point(978, 153);
             this.gcCompare.MainView = this.gvCompare;
             this.gcCompare.Name = "gcCompare";
-            this.gcCompare.Size = new System.Drawing.Size(252, 540);
+            this.gcCompare.Size = new System.Drawing.Size(305, 540);
             this.gcCompare.TabIndex = 12;
             this.gcCompare.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvCompare});
@@ -147,7 +154,7 @@
             this.gcTags.Location = new System.Drawing.Point(12, 29);
             this.gcTags.MainView = this.gvTags;
             this.gcTags.Name = "gcTags";
-            this.gcTags.Size = new System.Drawing.Size(284, 674);
+            this.gcTags.Size = new System.Drawing.Size(346, 674);
             this.gcTags.TabIndex = 10;
             this.gcTags.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvTags});
@@ -166,10 +173,10 @@
             // 
             // gcDatabase
             // 
-            this.gcDatabase.Location = new System.Drawing.Point(572, 163);
+            this.gcDatabase.Location = new System.Drawing.Point(670, 153);
             this.gcDatabase.MainView = this.gvDatabase;
             this.gcDatabase.Name = "gcDatabase";
-            this.gcDatabase.Size = new System.Drawing.Size(326, 540);
+            this.gcDatabase.Size = new System.Drawing.Size(304, 540);
             this.gcDatabase.TabIndex = 9;
             this.gcDatabase.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvDatabase});
@@ -181,10 +188,10 @@
             // 
             // gcInfluxdb
             // 
-            this.gcInfluxdb.Location = new System.Drawing.Point(300, 163);
+            this.gcInfluxdb.Location = new System.Drawing.Point(362, 153);
             this.gcInfluxdb.MainView = this.gvInfluxdb;
             this.gcInfluxdb.Name = "gcInfluxdb";
-            this.gcInfluxdb.Size = new System.Drawing.Size(268, 540);
+            this.gcInfluxdb.Size = new System.Drawing.Size(304, 540);
             this.gcInfluxdb.TabIndex = 5;
             this.gcInfluxdb.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvInfluxdb});
@@ -197,7 +204,7 @@
             // deStartDate
             // 
             this.deStartDate.EditValue = null;
-            this.deStartDate.Location = new System.Drawing.Point(374, 38);
+            this.deStartDate.Location = new System.Drawing.Point(444, 38);
             this.deStartDate.Name = "deStartDate";
             this.deStartDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -205,14 +212,14 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.deStartDate.Properties.MaskSettings.Set("mask", "yyyy-MM-dd HH:mm");
             this.deStartDate.Properties.UseMaskAsDisplayFormat = true;
-            this.deStartDate.Size = new System.Drawing.Size(282, 20);
+            this.deStartDate.Size = new System.Drawing.Size(531, 20);
             this.deStartDate.StyleController = this.layoutControl1;
             this.deStartDate.TabIndex = 4;
             // 
             // deEndDate
             // 
             this.deEndDate.EditValue = null;
-            this.deEndDate.Location = new System.Drawing.Point(734, 38);
+            this.deEndDate.Location = new System.Drawing.Point(1061, 38);
             this.deEndDate.Name = "deEndDate";
             this.deEndDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -220,15 +227,15 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.deEndDate.Properties.MaskSettings.Set("mask", "yyyy-MM-dd HH:mm");
             this.deEndDate.Properties.UseMaskAsDisplayFormat = true;
-            this.deEndDate.Size = new System.Drawing.Size(420, 20);
+            this.deEndDate.Size = new System.Drawing.Size(490, 20);
             this.deEndDate.StyleController = this.layoutControl1;
             this.deEndDate.TabIndex = 4;
             // 
             // btnRecovery
             // 
-            this.btnRecovery.Location = new System.Drawing.Point(739, 62);
+            this.btnRecovery.Location = new System.Drawing.Point(1185, 62);
             this.btnRecovery.Name = "btnRecovery";
-            this.btnRecovery.Size = new System.Drawing.Size(415, 22);
+            this.btnRecovery.Size = new System.Drawing.Size(366, 22);
             this.btnRecovery.StyleController = this.layoutControl1;
             this.btnRecovery.TabIndex = 6;
             this.btnRecovery.Text = "복구";
@@ -236,48 +243,49 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(300, 62);
+            this.btnSearch.Location = new System.Drawing.Point(362, 62);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(370, 22);
+            this.btnSearch.Size = new System.Drawing.Size(408, 22);
             this.btnSearch.StyleController = this.layoutControl1;
             this.btnSearch.TabIndex = 7;
-            this.btnSearch.Text = "Search";
+            this.btnSearch.Text = "조회";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // btnDataValidation
+            // btnInterpolation
             // 
-            this.btnDataValidation.Location = new System.Drawing.Point(674, 62);
-            this.btnDataValidation.Name = "btnDataValidation";
-            this.btnDataValidation.Size = new System.Drawing.Size(61, 22);
-            this.btnDataValidation.StyleController = this.layoutControl1;
-            this.btnDataValidation.TabIndex = 8;
-            this.btnDataValidation.Text = "Validation";
+            this.btnInterpolation.Location = new System.Drawing.Point(774, 62);
+            this.btnInterpolation.Name = "btnInterpolation";
+            this.btnInterpolation.Size = new System.Drawing.Size(407, 22);
+            this.btnInterpolation.StyleController = this.layoutControl1;
+            this.btnInterpolation.TabIndex = 8;
+            this.btnInterpolation.Text = "데이터 보간";
+            this.btnInterpolation.Click += new System.EventHandler(this.btnInterpolation_Click);
             // 
             // btnSettingReload
             // 
-            this.btnSettingReload.Location = new System.Drawing.Point(300, 12);
+            this.btnSettingReload.Location = new System.Drawing.Point(362, 12);
             this.btnSettingReload.Name = "btnSettingReload";
-            this.btnSettingReload.Size = new System.Drawing.Size(388, 22);
+            this.btnSettingReload.Size = new System.Drawing.Size(613, 22);
             this.btnSettingReload.StyleController = this.layoutControl1;
             this.btnSettingReload.TabIndex = 11;
-            this.btnSettingReload.Text = "Setting Reload";
+            this.btnSettingReload.Text = "설정 동기화";
             this.btnSettingReload.Click += new System.EventHandler(this.btnSettingReload_Click);
             // 
             // checkEdit1
             // 
-            this.checkEdit1.Location = new System.Drawing.Point(300, 98);
+            this.checkEdit1.Location = new System.Drawing.Point(362, 88);
             this.checkEdit1.Name = "checkEdit1";
             this.checkEdit1.Properties.Caption = "checkEdit1";
-            this.checkEdit1.Size = new System.Drawing.Size(854, 20);
+            this.checkEdit1.Size = new System.Drawing.Size(1189, 20);
             this.checkEdit1.StyleController = this.layoutControl1;
             this.checkEdit1.TabIndex = 13;
             // 
             // checkEdit2
             // 
-            this.checkEdit2.Location = new System.Drawing.Point(300, 122);
+            this.checkEdit2.Location = new System.Drawing.Point(362, 112);
             this.checkEdit2.Name = "checkEdit2";
             this.checkEdit2.Properties.Caption = "checkEdit2";
-            this.checkEdit2.Size = new System.Drawing.Size(854, 20);
+            this.checkEdit2.Size = new System.Drawing.Size(1189, 20);
             this.checkEdit2.StyleController = this.layoutControl1;
             this.checkEdit2.TabIndex = 14;
             // 
@@ -291,101 +299,102 @@
             this.layoutControlItem3,
             this.layoutControlItem4,
             this.layoutControlItem6,
-            this.layoutControlItem7,
             this.layoutControlItem5,
             this.layoutControlItem8,
-            this.emptySpaceItem1,
             this.layoutControlItem9,
             this.layoutControlItem10,
             this.layoutControlItem11,
             this.layoutControlItem12,
-            this.layoutControlItem13});
+            this.layoutControlItem13,
+            this.layoutControlItem7,
+            this.layoutControlItem14,
+            this.emptySpaceItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1166, 715);
+            this.Root.Size = new System.Drawing.Size(1563, 715);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.simpleButton1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(680, 0);
+            this.layoutControlItem1.Location = new System.Drawing.Point(967, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(466, 26);
+            this.layoutControlItem1.Size = new System.Drawing.Size(576, 26);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.deStartDate;
-            this.layoutControlItem2.Location = new System.Drawing.Point(288, 26);
+            this.layoutControlItem2.Location = new System.Drawing.Point(350, 26);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(360, 24);
-            this.layoutControlItem2.Text = "Start:";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem2.Size = new System.Drawing.Size(617, 24);
+            this.layoutControlItem2.Text = "시작일:";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.deEndDate;
             this.layoutControlItem3.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.layoutControlItem3.CustomizationFormText = "layoutControlItem2";
-            this.layoutControlItem3.Location = new System.Drawing.Point(648, 26);
+            this.layoutControlItem3.Location = new System.Drawing.Point(967, 26);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(498, 24);
-            this.layoutControlItem3.Text = "End:";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem3.Size = new System.Drawing.Size(576, 24);
+            this.layoutControlItem3.Text = "종료일:";
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.gcInfluxdb;
-            this.layoutControlItem4.Location = new System.Drawing.Point(288, 134);
+            this.layoutControlItem4.Location = new System.Drawing.Point(350, 124);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(272, 561);
+            this.layoutControlItem4.Size = new System.Drawing.Size(308, 561);
             this.layoutControlItem4.Text = "Influxdb";
             this.layoutControlItem4.TextLocation = DevExpress.Utils.Locations.Top;
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem6
             // 
             this.layoutControlItem6.Control = this.btnSearch;
-            this.layoutControlItem6.Location = new System.Drawing.Point(288, 50);
+            this.layoutControlItem6.Location = new System.Drawing.Point(350, 50);
             this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(374, 26);
+            this.layoutControlItem6.Size = new System.Drawing.Size(412, 26);
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
             // 
             // layoutControlItem7
             // 
-            this.layoutControlItem7.Control = this.btnDataValidation;
-            this.layoutControlItem7.Location = new System.Drawing.Point(662, 50);
+            this.layoutControlItem7.Control = this.btnInterpolation;
+            this.layoutControlItem7.Location = new System.Drawing.Point(762, 50);
             this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(65, 26);
+            this.layoutControlItem7.Size = new System.Drawing.Size(411, 26);
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.btnRecovery;
-            this.layoutControlItem5.Location = new System.Drawing.Point(727, 50);
+            this.layoutControlItem5.Location = new System.Drawing.Point(1173, 50);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(419, 26);
+            this.layoutControlItem5.Size = new System.Drawing.Size(370, 26);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
             // layoutControlItem8
             // 
             this.layoutControlItem8.Control = this.gcDatabase;
-            this.layoutControlItem8.Location = new System.Drawing.Point(560, 134);
+            this.layoutControlItem8.Location = new System.Drawing.Point(658, 124);
             this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(330, 561);
+            this.layoutControlItem8.Size = new System.Drawing.Size(308, 561);
             this.layoutControlItem8.Text = "Mariadb";
             this.layoutControlItem8.TextLocation = DevExpress.Utils.Locations.Top;
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(70, 14);
             // 
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(288, 76);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(350, 685);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(858, 10);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(1193, 10);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem9
@@ -393,17 +402,17 @@
             this.layoutControlItem9.Control = this.gcTags;
             this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(288, 695);
+            this.layoutControlItem9.Size = new System.Drawing.Size(350, 695);
             this.layoutControlItem9.Text = "Tags";
             this.layoutControlItem9.TextLocation = DevExpress.Utils.Locations.Top;
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem10
             // 
             this.layoutControlItem10.Control = this.btnSettingReload;
-            this.layoutControlItem10.Location = new System.Drawing.Point(288, 0);
+            this.layoutControlItem10.Location = new System.Drawing.Point(350, 0);
             this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(392, 26);
+            this.layoutControlItem10.Size = new System.Drawing.Size(617, 26);
             this.layoutControlItem10.Text = "Setting Reload";
             this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem10.TextVisible = false;
@@ -411,36 +420,63 @@
             // layoutControlItem11
             // 
             this.layoutControlItem11.Control = this.gcCompare;
-            this.layoutControlItem11.Location = new System.Drawing.Point(890, 134);
+            this.layoutControlItem11.Location = new System.Drawing.Point(966, 124);
             this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(256, 561);
+            this.layoutControlItem11.Size = new System.Drawing.Size(309, 561);
             this.layoutControlItem11.Text = "Comparison";
             this.layoutControlItem11.TextLocation = DevExpress.Utils.Locations.Top;
-            this.layoutControlItem11.TextSize = new System.Drawing.Size(62, 14);
+            this.layoutControlItem11.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem12
             // 
             this.layoutControlItem12.Control = this.checkEdit1;
-            this.layoutControlItem12.Location = new System.Drawing.Point(288, 86);
+            this.layoutControlItem12.Location = new System.Drawing.Point(350, 76);
             this.layoutControlItem12.Name = "layoutControlItem12";
-            this.layoutControlItem12.Size = new System.Drawing.Size(858, 24);
+            this.layoutControlItem12.Size = new System.Drawing.Size(1193, 24);
             this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem12.TextVisible = false;
             // 
             // layoutControlItem13
             // 
             this.layoutControlItem13.Control = this.checkEdit2;
-            this.layoutControlItem13.Location = new System.Drawing.Point(288, 110);
+            this.layoutControlItem13.Location = new System.Drawing.Point(350, 100);
             this.layoutControlItem13.Name = "layoutControlItem13";
-            this.layoutControlItem13.Size = new System.Drawing.Size(858, 24);
+            this.layoutControlItem13.Size = new System.Drawing.Size(1193, 24);
             this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem13.TextVisible = false;
+            // 
+            // gcInterpolation
+            // 
+            this.gcInterpolation.Location = new System.Drawing.Point(1287, 153);
+            this.gcInterpolation.MainView = this.gvInterpolation;
+            this.gcInterpolation.Name = "gcInterpolation";
+            this.gcInterpolation.Size = new System.Drawing.Size(264, 540);
+            this.gcInterpolation.TabIndex = 12;
+            this.gcInterpolation.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gvInterpolation});
+            // 
+            // gvInterpolation
+            // 
+            this.gvInterpolation.GridControl = this.gcInterpolation;
+            this.gvInterpolation.Name = "gvInterpolation";
+            // 
+            // layoutControlItem14
+            // 
+            this.layoutControlItem14.Control = this.gcInterpolation;
+            this.layoutControlItem14.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.layoutControlItem14.CustomizationFormText = "Comparison";
+            this.layoutControlItem14.Location = new System.Drawing.Point(1275, 124);
+            this.layoutControlItem14.Name = "layoutControlItem14";
+            this.layoutControlItem14.Size = new System.Drawing.Size(268, 561);
+            this.layoutControlItem14.Text = "Interpolation";
+            this.layoutControlItem14.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItem14.TextSize = new System.Drawing.Size(70, 14);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 715);
+            this.ClientSize = new System.Drawing.Size(1563, 715);
             this.Controls.Add(this.layoutControl1);
             this.Name = "MainForm";
             this.Text = "frmMain";
@@ -475,6 +511,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gcInterpolation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gvInterpolation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -497,7 +536,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gvInfluxdb;
         private DevExpress.XtraEditors.SimpleButton btnRecovery;
         private DevExpress.XtraEditors.SimpleButton btnSearch;
-        private DevExpress.XtraEditors.SimpleButton btnDataValidation;
+        private DevExpress.XtraEditors.SimpleButton btnInterpolation;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
@@ -514,5 +553,8 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
+        private DevExpress.XtraGrid.GridControl gcInterpolation;
+        private DevExpress.XtraGrid.Views.Grid.GridView gvInterpolation;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
     }
 }

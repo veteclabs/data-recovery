@@ -33,7 +33,7 @@ namespace DataRecorvery.Infrastructure.InfluxDb
             using (var client = new InfluxDBClient(_url, _token))
             {
 
-                string range = $"range(start: {start.ToUniversalTime().AddDays(1):yyyy-MM-ddTHH:mm:ss}Z, stop: {end.ToUniversalTime().AddDays(1):yyyy-MM-ddTHH:mm:ss}Z)";
+                string range = $"range(start: {start:yyyy-MM-ddTHH:mm:ss}Z, stop: {end:yyyy-MM-ddTHH:mm:ss}Z)";
 
                 string tagFilter;
                 if (tagNames.Count == 1)
@@ -58,8 +58,8 @@ namespace DataRecorvery.Infrastructure.InfluxDb
       createEmpty: true
   )
   |> fill(column: ""_value"", value: 0.0)
-  |> yield(name: ""fixed"")
-//|> timeShift(duration: -15m)
+  |> timeShift(duration: -15m)
+
                      ";
 
 
