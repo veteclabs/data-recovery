@@ -215,13 +215,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\ConfigManager.cs" />
+    <Compile Include="Domain\Interfaces\IInfluxTagRepository.cs" />
+    <Compile Include="Domain\Interfaces\IMariaTagRepository.cs" />
     <Compile Include="Domain\Interfaces\ITagRepository.cs" />
     <Compile Include="Domain\Models\Database.cs" />
+    <Compile Include="Domain\Models\InfluxDataPoint.cs" />
     <Compile Include="Domain\Models\Influxdb.cs" />
+    <Compile Include="Domain\Models\MariaDataPoint.cs" />
     <Compile Include="Domain\Models\Scada.cs" />
     <Compile Include="Domain\Models\Settings.cs" />
+    <Compile Include="Domain\Models\TagComparisonPoint.cs" />
     <Compile Include="Domain\Models\Tags.cs" />
     <Compile Include="Domain\Models\TagValue.cs" />
+    <Compile Include="Infrastructure\Database\MariaTagRepository.cs" />
+    <Compile Include="Infrastructure\InfluxDb\InfluxTagRepository.cs" />
     <Compile Include="Infrastructure\Scada\AccessTagRepository.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -271,8 +278,6 @@
   <ItemGroup>
     <Folder Include="App\Interfaces\" />
     <Folder Include="App\Services\" />
-    <Folder Include="Infrastructure\Database\" />
-    <Folder Include="Infrastructure\InfluxDb\" />
     <Folder Include="UI\Component\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
