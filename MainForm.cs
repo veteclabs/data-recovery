@@ -49,6 +49,9 @@ namespace DataRecorvery
             gvTags.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             gvTags.OptionsSelection.ShowCheckBoxSelectorInColumnHeader = DevExpress.Utils.DefaultBoolean.True;
             gvTags.OptionsBehavior.Editable = false; // 체크박스만 활성화, 편집은 비활성화
+
+            btnRecovery.Enabled = false;
+
         }
         private void LoadTagsToGrid()
         {
@@ -190,6 +193,69 @@ namespace DataRecorvery
                 gridView.Columns["TimeStamp"].DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
             }
         }
+        private void LoadInterpolatedData()
+        {
+            btnRecovery.Enabled = false;
+
+            try
+            {
+                var data = _compared; // Influx + Maria 머지된 리스트
+                var interpolated = new InterpolationService().Interpolate(data);
+                gcInterpolation.DataSource = interpolated;
+
+                gvInterpolation.BestFitColumns();
+                gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+                gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
+                btnRecovery.Enabled = true;
+
+            }
+            catch (Exception e)
+            {
+                XtraMessageBox.Show($"데이터 보간 중 오류 발생: {e.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+
+            }
+        }
+        private async void btnSaveInterpolated_Click(object sender, EventArgs e)
+        {
+            btnRecovery.Enabled = false;
+            btnRecovery.Text = "복구 중...";
+            try
+            {
+                // 1) 보간된 데이터
+                var interpolated = gvInterpolation.DataSource as List<TagComparisonPoint>;
+                if (interpolated == null || !interpolated.Any())
+                    return;
+
+                // 2) Influx에 쓰기
+                var influx = _settings.Influxdb;
+                using (var repo = new InfluxTagRepository(
+                   influx.Url, influx.Token, influx.Organizations, influx.Buckets))
+                {
+                    // 동기 쓰기를 백그라운드 스레드에서 실행
+                    await Task.Run(() => repo.WriteInterpolatedData(interpolated));
+                }
+
+                XtraMessageBox.Show(
+                  "Interpolated data has been written to InfluxDB.",
+                  "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                  $"InfluxDB write failed:\n{ex.Message}",
+                  "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnRecovery.Enabled = true;
+                btnRecovery.Text = "복구";
+            }
+        }
+
+
         private void LoadCompareData(List<InfluxDataPoint> influxData, List<MariaDataPoint> mariaData)
         {
             _compared = CompareTagData(influxData, mariaData);
@@ -244,24 +310,26 @@ namespace DataRecorvery
             }
         }
 
-        private void btnRecovery_Click(object sender, EventArgs e)
+        private  void btnRecovery_Click(object sender, EventArgs e)
         {
-
+            btnSaveInterpolated_Click(sender, e);
         }
 
         private void btnInterpolation_Click(object sender, EventArgs e)
         {
             LoadInterpolatedData();
         }
-        private void LoadInterpolatedData()
-        {
-            var data = _compared; // Influx + Maria 머지된 리스트
-            var interpolated = new InterpolationService().Interpolate(data);
-            gcInterpolation.DataSource = interpolated;
 
-            gvInterpolation.BestFitColumns();
-            gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
+        private void gvCompare_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName == "ManualValue")
+            {
+                var row = gvInterpolation.GetRow(e.RowHandle) as TagComparisonPoint;
+                if (row != null)
+                {
+                    row.InterpolationStatus = "Manual Fix";
+                }
+            }
         }
     }
 }

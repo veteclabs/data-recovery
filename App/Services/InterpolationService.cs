@@ -11,80 +11,70 @@ namespace DataRecorvery.App.Services
     {
         public List<TagComparisonPoint> Interpolate(List<TagComparisonPoint> input)
         {
-            string currentTag = null;
-            int? startIdx = null;
-            int? endIdx = null;
+            // 1) 원본 보호를 위한 깊은 복사
+            var list = input.Select(p => p.Clone()).ToList();
 
-            for (int i = 0; i < input.Count; i++)
+            // 2) 태그별로 그룹핑
+            foreach (var group in list.GroupBy(p => p.TagName))
             {
-                var point = input[i];
-
-                if (!string.Equals(currentTag, point.TagName))
+                var pts = group.OrderBy(p => p.TimeStamp).ToList();
+                
+                // 3a) 사용자가 입력한 ManualValue 우선 반영
+                foreach (var pt in pts)
                 {
-                    currentTag = point.TagName;
-                    startIdx = null;
-                    endIdx = null;
-                }
-
-                // ✅ [1] Maria → Influx 보정
-                if ((point.Value_Influx == null || point.Value_Influx == 0) &&
-                    point.Value_Maria.HasValue && point.Value_Maria > 0)
-                {
-                    point.Interpolated = point.Value_Maria;
-                    point.InterpolationStatus = "Influx missing → Maria used";
-                    continue;
-                }
-
-                // ✅ [2] Influx → Maria 보정 (기존 로직)
-                if (point.Value_Maria.HasValue)
-                {
-                    if (startIdx == null)
-                        startIdx = i;
-                    else
+                    if (pt.ManualValue.HasValue)
                     {
-                        endIdx = i;
+                        pt.Interpolated = pt.ManualValue;
+                        pt.InterpolationStatus = "Manual entry";
+                    }
+                }
+                // 3b) 먼저 Influx missing → Maria used 처리
+                foreach (var pt in pts)
+                {
+                    if ((pt.Value_Influx == null || pt.Value_Influx == 0) && pt.Value_Maria.HasValue)
+                    {
+                        pt.Interpolated = pt.Value_Maria;
+                        pt.InterpolationStatus = "Influx missing → Maria used";
+                    }
+                }
+                
+                // 4) Anchor(수동 또는 Maria) 리스트 수집
+                var anchors = new List<int>();
+                for (int i = 0; i < pts.Count; i++)
+                {
+                    var pt = pts[i];
+                    if (pt.ManualValue.HasValue || pt.Value_Maria.HasValue)
+                    {
+                        anchors.Add(i);                       
+                    }
+                }
 
-                        var startVal = input[startIdx.Value].Value_Influx;
-                        var endVal = input[endIdx.Value].Value_Influx;
-                        int count = endIdx.Value - startIdx.Value - 1;
+                // 5) Anchor가 2개 이상 있을 때만 보간
+                for (int a = 0; a < anchors.Count - 1; a++)
+                {
+                    int s = anchors[a], e = anchors[a + 1];
+                    double? vStart = pts[s].ManualValue ?? pts[s].Value_Maria ?? pts[s].Value_Influx;
+                    double? vEnd = pts[e].ManualValue ?? pts[e].Value_Maria;
 
-                        bool isInvalid = !startVal.HasValue || !endVal.HasValue
-                                         || startVal < 0 || endVal < 0
-                                         || endVal <= startVal
-                                         || (endVal - startVal) > 10000;
+                    if (!vStart.HasValue || !vEnd.HasValue)
+                        continue;
 
-                        if (count > 0 && !isInvalid)
-                        {
-                            double step = (endVal.Value - startVal.Value) / (count + 1);
-                            for (int j = 1; j <= count; j++)
-                            {
-                                int idx = startIdx.Value + j;
+                    int span = e - s;
+                    double step = (vEnd.Value - vStart.Value) / span;
 
-                                if (input[idx].Value_Maria.HasValue)
-                                    continue; // 값 있는 경우 skip
-
-                                input[idx].Interpolated = Math.Round(startVal.Value + step * j, 2);
-                                input[idx].InterpolationStatus = "Interpolated from Influx";
-                            }
-                        }
-                        else if (count > 0)
-                        {
-                            for (int j = 1; j <= count; j++)
-                            {
-                                int idx = startIdx.Value + j;
-                                input[idx].Interpolated = null;
-                                input[idx].InterpolationStatus = "Skipped due to invalid pattern";
-                            }
-                        }
-
-                        startIdx = endIdx;
-                        endIdx = null;
+                    for (int k = 1; k < span; k++)
+                    {
+                        int idx = s + k;
+                        // Maria나 Manual이 원래 있든 없든 모두 덮어쓰기
+                        pts[idx].Interpolated = Math.Round(vStart.Value + step * k, 2);
+                        pts[idx].InterpolationStatus = "Interpolated (auto)";
                     }
                 }
             }
 
-            return input;
+            return list;
         }
+
     }
 
 }
