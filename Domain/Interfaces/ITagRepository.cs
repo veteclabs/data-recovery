@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace DataRecorvery.Domain.Interfaces
 {
-    public interface ITagRepository
+    public interface IAccessDbRepository
     {
-        List<Tags> GetTags();
+        List<Project> GetProjects();
+        List<Node> GetNodes(int projId);
+        List<Comport> GetComports(int nodeId);
+        List<Device> GetDevices(int comportId);
+        List<Tag> GetTags(long deviceId);
+        List<Tag> GetTags();
+
     }
 }

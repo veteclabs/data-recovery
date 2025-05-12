@@ -132,6 +132,7 @@ namespace DataRecorvery.UI.Forms
         /// <returns>모든 테스트가 성공하면 true, 실패하면 false</returns>
         private async Task<bool> TestConnections()
         {
+            labelControl1.Text = string.Empty;
             // 1. InfluxDB 연결 테스트
             try
             {

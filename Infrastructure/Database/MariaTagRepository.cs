@@ -19,25 +19,19 @@ namespace DataRecorvery.Infrastructure.Database
         {
             _connectionString = connectionString;
         }
-        public List<MariaDataPoint> GetTagDataPerDay(string logDate, string tagName, int projNodeId)
+        public List<MariaDataPoint> GetTagDataPerDay(string logDate,  string tagName, int projNodeId)
         {
             string sql = @"
                             SELECT
-                                STR_TO_DATE(CONCAT(bt.LogDate, ' ', sqp.value), '%y/%m/%d %H:%i:%s') AS TimeStamp,
+                                STR_TO_DATE(CONCAT(bt.LogDate, ' ', bt.LogTime), '%y/%m/%d %H:%i:%s') AS TimeStamp,
                                 bt.TagName AS TagName,
                                 COALESCE(bt.LastValue, 0) AS Value
                             FROM
-                                tagdata.sources_quarter_past sqp
-                            LEFT JOIN
-                                tagdata.bwanalogtable bt
-                                ON TIME_FORMAT(sqp.value, '%H:%i:%s') = bt.LogTime
-                                AND bt.ProjNodeId = @ProjNodeId
-                                AND bt.TagName = @TagName
-                                AND bt.LogDate = @LogDate
+                                bwanalogtable bt
                             WHERE
-                                bt.LogDate IS NOT NULL AND bt.LogTime IS NOT NULL
-                            ORDER BY
-                                sqp.value;";
+                                bt.ProjNodeId = @ProjNodeId
+                                AND bt.TagName = @TagName
+                                AND bt.LogDate = @LogDate;";
 
             using (var conn = new MySqlConnection(_connectionString))
             {
@@ -51,6 +45,7 @@ namespace DataRecorvery.Infrastructure.Database
         }
         public List<MariaDataPoint> GetTagData(List<string> tagNames, DateTime start, DateTime end, int projNodeId)
         {
+            
             var result = new ConcurrentBag<MariaDataPoint>();
 
             Parallel.ForEach(tagNames, tagName =>

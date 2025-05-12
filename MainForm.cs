@@ -6,6 +6,7 @@ using DataRecorvery.Infrastructure.Database;
 using DataRecorvery.Infrastructure.InfluxDb;
 using DataRecorvery.Infrastructure.Scada;
 using DataRecorvery.UI.Forms;
+using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,9 @@ using System.Windows.Forms;
 
 namespace DataRecorvery
 {
-    public partial class MainForm : DevExpress.XtraEditors.XtraForm
+    public partial class MainForm : ToolbarForm
     {
-
         SettingsConfig _settings;
-
         private DateTime StartDate => deStartDate.DateTime;
         private DateTime EndDate => deEndDate.DateTime;
         private int ProjNodeId => int.Parse(_settings.Scada.ProjNodeId);
@@ -37,27 +36,22 @@ namespace DataRecorvery
         {
             // 오늘 날짜 기준
             DateTime today = DateTime.Today;
-
             // 시작일: 오늘
             deStartDate.EditValue = today;
-
             // 종료일: 일주일 뒤
             deEndDate.EditValue = today.AddDays(7);
-
             btnSettingReload_Click(null, null);
             gvTags.OptionsSelection.MultiSelect = true;
             gvTags.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             gvTags.OptionsSelection.ShowCheckBoxSelectorInColumnHeader = DevExpress.Utils.DefaultBoolean.True;
             gvTags.OptionsBehavior.Editable = false; // 체크박스만 활성화, 편집은 비활성화
-
             btnRecovery.Enabled = false;
-
         }
         private void LoadTagsToGrid()
         {
             try
             {
-                ITagRepository tagRepository = new AccessTagRepository(_settings.Scada);
+                IAccessDbRepository tagRepository = new AccessTagRepository(_settings.Scada);
                 var tags = tagRepository.GetTags();
                 gcTags.DataSource = tags;
                 gvTags.BestFitColumns();
@@ -71,10 +65,10 @@ namespace DataRecorvery
         {
             using (frmSettings frm = new frmSettings())
             {
+                frm.StartPosition = FormStartPosition.CenterParent; // 코드로 설정해도 OK
                 frm.ShowDialog();
             }
         }
-
         private void btnSettingReload_Click(object sender, EventArgs e)
         {
             _settings = ConfigManager.LoadConfig();
@@ -99,7 +93,7 @@ namespace DataRecorvery
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show($"데이터 조회 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XtraMessageBox.Show($"데이터 조회 중 오류 발생: {ex.ToString()}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -114,10 +108,7 @@ namespace DataRecorvery
                 var influx = _settings.Influxdb;
                 var repo = new InfluxTagRepository(influx.Url, influx.Token, influx.Organizations, influx.Buckets);
                 var dataPoints = repo.GetTagData(GetSelectedTagNames(), StartDate, EndDate);
-
                 BindDataToGridSafe(gcInfluxdb, gvInfluxdb, dataPoints);
-
-
                 return dataPoints;
             });
         }
@@ -131,7 +122,11 @@ namespace DataRecorvery
                 var dataPoints = repo.GetTagData(GetSelectedTagNames(), StartDate, EndDate, ProjNodeId);
 
                 BindDataToGridSafe(gcDatabase, gvDatabase, dataPoints);
-
+                // 각 TimeStamp에 15분씩 추가
+                foreach (var dp in dataPoints)
+                {
+                    dp.TimeStamp = dp.TimeStamp.AddMinutes(15);
+                }
 
                 return dataPoints;
             });
@@ -150,14 +145,14 @@ namespace DataRecorvery
             }
         }
 
-        private List<Tags> GetCheckedTags()
+        private List<Tag> GetCheckedTags()
         {
             var selectedRows = gvTags.GetSelectedRows();
-            var result = new List<Tags>();
+            var result = new List<Tag>();
 
             foreach (var rowHandle in selectedRows)
             {
-                var tag = gvTags.GetRow(rowHandle) as Tags;
+                var tag = gvTags.GetRow(rowHandle) as Tag;
                 if (tag != null)
                     result.Add(tag);
             }

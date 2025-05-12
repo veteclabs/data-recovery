@@ -46,6 +46,7 @@
     <Reference Include="DevExpress.Data.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Dialogs.v23.1.Core, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Drawing.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v23.1.Core, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v23.1.Core, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.RichEdit.v23.1.Core, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Sparkline.v23.1.Core, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -55,7 +56,9 @@
     <Reference Include="DevExpress.XtraEditors.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraLayout.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v23.1, Version=23.1.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="InfluxData.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\InfluxData.Net.8.0.1\lib\net461\InfluxData.Net.dll</HintPath>
@@ -233,6 +236,12 @@
     <Compile Include="Domain\Models\TagComparisonPoint.cs" />
     <Compile Include="Domain\Models\Tags.cs" />
     <Compile Include="Domain\Models\TagValue.cs" />
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Database\MariaTagRepository.cs" />
     <Compile Include="Infrastructure\InfluxDb\InfluxTagRepository.cs" />
     <Compile Include="Infrastructure\Scada\AccessTagRepository.cs" />
@@ -242,16 +251,100 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Controls.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucCodeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucCodeEditor.Designer.cs">
+      <DependentUpon>ucCodeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ucGridControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucGridControl.Designer.cs">
+      <DependentUpon>ucGridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ucOutput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucOutput.Designer.cs">
+      <DependentUpon>ucOutput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ucSCADAExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucSCADAExplorer.Designer.cs">
+      <DependentUpon>ucSCADAExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ucTaskList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucTaskList.Designer.cs">
+      <DependentUpon>ucTaskList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ucToolbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ucToolbox.Designer.cs">
+      <DependentUpon>ucToolbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Component\ucComparison.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Component\ucComparison.Designer.cs">
+      <DependentUpon>ucComparison.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Component\ucInfluxdb.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Component\ucInfluxdb.Designer.cs">
+      <DependentUpon>ucInfluxdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Component\ucInterpolation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Component\ucInterpolation.Designer.cs">
+      <DependentUpon>ucInterpolation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Component\ucMariadb.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Component\ucMariadb.Designer.cs">
+      <DependentUpon>ucMariadb.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucCodeEditor.resx">
+      <DependentUpon>ucCodeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucGridControl.resx">
+      <DependentUpon>ucGridControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucOutput.resx">
+      <DependentUpon>ucOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucSCADAExplorer.resx">
+      <DependentUpon>ucSCADAExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucTaskList.resx">
+      <DependentUpon>ucTaskList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ucToolbox.resx">
+      <DependentUpon>ucToolbox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -263,6 +356,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\Component\ucComparison.resx">
+      <DependentUpon>ucComparison.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Component\ucInfluxdb.resx">
+      <DependentUpon>ucInfluxdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Component\ucInterpolation.resx">
+      <DependentUpon>ucInterpolation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Component\ucMariadb.resx">
+      <DependentUpon>ucMariadb.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -283,7 +388,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Interfaces\" />
-    <Folder Include="UI\Component\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SplashScreenNew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
