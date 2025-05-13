@@ -1,5 +1,5 @@
-﻿using DataRecorvery.Domain.Interfaces;
-using DataRecorvery.Domain.Models;
+﻿using Plate.Domain.Interfaces;
+using Plate.Domain.Models;
 using InfluxData.Net.Common.Constants;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataRecorvery.Infrastructure.InfluxDb
+namespace Plate.Infrastructure.InfluxDb
 {
     public class InfluxTagRepository : IDisposable
     {
@@ -32,6 +32,7 @@ namespace DataRecorvery.Infrastructure.InfluxDb
         }
         public async Task RunAggregationAndTimeShiftAsync(string tagName, DateTime startDate)
         {
+
             // 시작일~1년 후 종료일 계산
             var startTime = startDate.Date;
             var endTime = startTime.AddYears(1);
@@ -42,7 +43,7 @@ namespace DataRecorvery.Infrastructure.InfluxDb
 
             List<string> timeUnits = new List<string>();
             timeUnits.AddRange(new[] { "hour", "day", "month", "year" });
-           
+
             var queryApi = _client.GetQueryApi();
 
             foreach (var unit in timeUnits)
@@ -64,16 +65,16 @@ namespace DataRecorvery.Infrastructure.InfluxDb
 
                 // Flux 쿼리 문자열 구성
                 var fluxQuery = string.Format(@"
-from(bucket: ""history"")
-  |> range(start: {0}, stop: {1})
-  |> filter(fn: (r) => r[""_measurement""] == ""minute"")
-  |> filter(fn: (r) => r[""_field""] == ""value"")
-  |> filter(fn: (r) => r[""tagname""] == ""{2}"")
-  |> aggregateWindow(every: {3}, fn: last, createEmpty: false)
-  |> timeShift(duration: {4})
-  |> set(key: ""_measurement"", value: ""{5}"")
-  |> to(bucket: ""history"", org: ""{6}"")
-", start, end, tagName, every, duration, unit, _org);
+                                                from(bucket: ""history"")
+                                                  |> range(start: {0}, stop: {1})
+                                                  |> filter(fn: (r) => r[""_measurement""] == ""minute"")
+                                                  |> filter(fn: (r) => r[""_field""] == ""value"")
+                                                  |> filter(fn: (r) => r[""tagname""] == ""{2}"")
+                                                  |> aggregateWindow(every: {3}, fn: last, createEmpty: false)
+                                                  |> timeShift(duration: {4})
+                                                  |> set(key: ""_measurement"", value: ""{5}"")
+                                                  |> to(bucket: ""history"", org: ""{6}"")
+                                                ", start, end, tagName, every, duration, unit, _org);
 
                 try
                 {
@@ -84,6 +85,7 @@ from(bucket: ""history"")
                 {
                     // 예외 처리 및 로그
                     MessageBox.Show("Flux 쿼리 실행 중 오류: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw;
                 }
 
 
@@ -98,9 +100,9 @@ from(bucket: ""history"")
                     continue;
 
                 var ts = DateTime.SpecifyKind(
-                            p.TimeStamp.AddMinutes(-1) ,    
-                            DateTimeKind.Utc);               
-                
+                            p.TimeStamp.AddMinutes(-1),
+                            DateTimeKind.Utc);
+
                 var pt = PointData
                     .Measurement("minute")
                     .Tag("tagname", p.TagName)
@@ -144,8 +146,9 @@ from(bucket: ""history"")
         }
 
         public List<InfluxDataPoint> GetTagData(
-            List<string> tagNames, DateTime start, DateTime end)
+            List<string> tagNames, DateTime start, DateTime end,int interval)
         {
+
             var result = new List<InfluxDataPoint>();
 
             // range 파라미터
@@ -161,24 +164,29 @@ from(bucket: ""history"")
                             |> filter(fn: (r) => r[""_measurement""] == ""minute"")
                             |> filter(fn: (r) => r[""_field""] == ""value"")
                             |> filter(fn: (r) => {tagFilter})
-                            |> aggregateWindow(fn: last, every: 15m, createEmpty: true)
+                            |> aggregateWindow(fn: last, every: {interval}m, createEmpty: true)
                             |> fill(column: ""_value"", value: 0.0)
-                            //|> timeShift(duration: -15m)
+                            //|> timeShift(duration: -{interval}m)
                             ";
+            try
+            {
+                var queryApi = _client.GetQueryApi();
+                var tables = queryApi.QueryAsync(flux, _org).GetAwaiter().GetResult();
 
-            var queryApi = _client.GetQueryApi();
-            var tables = queryApi.QueryAsync(flux, _org).GetAwaiter().GetResult();
-
-            // 결과 파싱
-            foreach (var table in tables)
-                foreach (var record in table.Records)
-                    result.Add(new InfluxDataPoint
-                    {
-                        TimeStamp = record.GetTimeInDateTime().GetValueOrDefault().ToUniversalTime(),
-                        TagName = record.Values["tagname"]?.ToString(),
-                        Value = Convert.ToDouble(record.GetValue())
-                    });
-
+                // 결과 파싱
+                foreach (var table in tables)
+                    foreach (var record in table.Records)
+                        result.Add(new InfluxDataPoint
+                        {
+                            TimeStamp = record.GetTimeInDateTime().GetValueOrDefault().ToUniversalTime(),
+                            TagName = record.Values["tagname"]?.ToString(),
+                            Value = Convert.ToDouble(record.GetValue())
+                        });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
             return result;
         }
 

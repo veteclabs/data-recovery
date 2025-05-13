@@ -8,8 +8,8 @@
     "ConnectionString": "Server=localhost;Port=3725;Database=tagdata;Uid=root;Pwd=vetec3721;"
   },
   "Influxdb": {
-    "Url": "http://localhost:8886",
-    "Token": "lML2Reb1-I6kPBsnZR3oY051TJzBbfu-jzZizdZetamn1XT-EJ3J02qvRVDCuvAT3kYbg_ZW4s3v-WBmlzBykg==",
+    "Url": "http://localhost:8087",
+    "Token": "0H9zQBYh0c8eV8FGEIEzesRsZP6W-sm5BackZ6oU15GQZi7qTD-p07q_emZUC0KeR5jigNi_mYLIepRRR9LE-A==",
     "Username": "admin",
     "Password": "vetec3721!",
     "Organizations": "primary",

@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery.Modules
+﻿namespace Plate.Modules
 {
     partial class ucGridControl
     {
@@ -37,8 +37,8 @@
             this.gvInterpolation = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.editBar = new DevExpress.XtraRichEdit.UI.CommonBar();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
@@ -49,7 +49,9 @@
             this.deEndDate = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.iSearch = new DevExpress.XtraBars.BarButtonItem();
             this.iInterpolation = new DevExpress.XtraBars.BarButtonItem();
-            this.iRecovery = new DevExpress.XtraBars.BarButtonItem();
+            this.iSave = new DevExpress.XtraBars.BarButtonItem();
+            this.iInterval = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -77,13 +79,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvInterpolation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deStartDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deStartDate.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deEndDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deEndDate.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).BeginInit();
@@ -106,10 +109,10 @@
             // 
             // gcCompare
             // 
-            this.gcCompare.Location = new System.Drawing.Point(578, 29);
+            this.gcCompare.Location = new System.Drawing.Point(22, 29);
             this.gcCompare.MainView = this.gvCompare;
             this.gcCompare.Name = "gcCompare";
-            this.gcCompare.Size = new System.Drawing.Size(545, 837);
+            this.gcCompare.Size = new System.Drawing.Size(547, 837);
             this.gcCompare.TabIndex = 13;
             this.gcCompare.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvCompare});
@@ -121,10 +124,10 @@
             // 
             // gcInterpolation
             // 
-            this.gcInterpolation.Location = new System.Drawing.Point(12, 29);
+            this.gcInterpolation.Location = new System.Drawing.Point(573, 29);
             this.gcInterpolation.MainView = this.gvInterpolation;
             this.gcInterpolation.Name = "gcInterpolation";
-            this.gcInterpolation.Size = new System.Drawing.Size(552, 837);
+            this.gcInterpolation.Size = new System.Drawing.Size(550, 837);
             this.gcInterpolation.TabIndex = 14;
             this.gcInterpolation.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvInterpolation});
@@ -144,8 +147,8 @@
             this.Root.GroupBordersVisible = false;
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.splitterItem1});
+            this.splitterItem1,
+            this.layoutControlItem2});
             this.Root.Name = "Root";
             this.Root.Size = new System.Drawing.Size(1135, 878);
             this.Root.TextVisible = false;
@@ -153,29 +156,29 @@
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.gcCompare;
-            this.layoutControlItem1.Location = new System.Drawing.Point(566, 0);
+            this.layoutControlItem1.Location = new System.Drawing.Point(10, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(549, 858);
-            this.layoutControlItem1.Text = "Interpolation";
+            this.layoutControlItem1.Size = new System.Drawing.Size(551, 858);
+            this.layoutControlItem1.Text = "Comparison";
             this.layoutControlItem1.TextLocation = DevExpress.Utils.Locations.Top;
             this.layoutControlItem1.TextSize = new System.Drawing.Size(70, 14);
-            // 
-            // layoutControlItem2
-            // 
-            this.layoutControlItem2.Control = this.gcInterpolation;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(556, 858);
-            this.layoutControlItem2.Text = "Comparison";
-            this.layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(70, 14);
             // 
             // splitterItem1
             // 
             this.splitterItem1.AllowHotTrack = true;
-            this.splitterItem1.Location = new System.Drawing.Point(556, 0);
+            this.splitterItem1.Location = new System.Drawing.Point(0, 0);
             this.splitterItem1.Name = "splitterItem1";
             this.splitterItem1.Size = new System.Drawing.Size(10, 858);
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.gcInterpolation;
+            this.layoutControlItem2.Location = new System.Drawing.Point(561, 0);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(554, 858);
+            this.layoutControlItem2.Text = "Interpolation";
+            this.layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(70, 14);
             // 
             // barManager1
             // 
@@ -197,15 +200,16 @@
             this.findItem1,
             this.barEditItem1,
             this.iInterpolation,
-            this.iRecovery,
+            this.iSave,
             this.barButtonItem3,
             this.iStartDate,
             this.barEditItem3,
             this.iEndDate,
             this.barStaticItem1,
             this.barStaticItem2,
-            this.iSearch});
-            this.barManager1.MaxItemId = 68;
+            this.iSearch,
+            this.iInterval});
+            this.barManager1.MaxItemId = 69;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemFontEdit1,
             this.repositoryItemRichEditFontSizeEdit1,
@@ -213,7 +217,8 @@
             this.repositoryItemTextEdit1,
             this.deStartDate,
             this.repositoryItemTextEdit2,
-            this.deEndDate});
+            this.deEndDate,
+            this.repositoryItemSpinEdit1});
             // 
             // editBar
             // 
@@ -224,12 +229,13 @@
             this.editBar.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.editBar.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem1, true),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.iStartDate, "", false, true, true, 147),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.iStartDate, "", false, true, true, 185),
             new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem2),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.iEndDate, "", false, true, true, 133),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.iEndDate, "", false, true, true, 164),
             new DevExpress.XtraBars.LinkPersistInfo(this.iSearch, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.iInterpolation, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iRecovery, true)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iSave, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iInterval, true)});
             this.editBar.Text = "Edit";
             // 
             // barStaticItem1
@@ -290,15 +296,35 @@
             // 
             this.iInterpolation.Caption = "Interpolation";
             this.iInterpolation.Id = 59;
+            this.iInterpolation.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("iInterpolation.ImageOptions.SvgImage")));
             this.iInterpolation.Name = "iInterpolation";
+            this.iInterpolation.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.iInterpolation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iInterpolation_ItemClick);
             // 
-            // iRecovery
+            // iSave
             // 
-            this.iRecovery.Caption = "Recovery";
-            this.iRecovery.Id = 60;
-            this.iRecovery.Name = "iRecovery";
-            this.iRecovery.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iRecovery_ItemClick);
+            this.iSave.Caption = "Save";
+            this.iSave.Id = 60;
+            this.iSave.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("iRecovery.ImageOptions.SvgImage")));
+            this.iSave.Name = "iSave";
+            this.iSave.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.iSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iSave_ItemClick);
+            // 
+            // iInterval
+            // 
+            this.iInterval.Caption = "Interval (min.)";
+            this.iInterval.Edit = this.repositoryItemSpinEdit1;
+            this.iInterval.EditValue = ((short)(15));
+            this.iInterval.Id = 68;
+            this.iInterval.Name = "iInterval";
+            this.iInterval.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.Caption;
+            // 
+            // repositoryItemSpinEdit1
+            // 
+            this.repositoryItemSpinEdit1.AutoHeight = false;
+            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
             // 
             // barDockControlTop
             // 
@@ -457,13 +483,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvInterpolation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deStartDate.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deStartDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deEndDate.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deEndDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).EndInit();
@@ -497,7 +524,7 @@
         private DevExpress.XtraRichEdit.Design.RepositoryItemRichEditFontSizeEdit repositoryItemRichEditFontSizeEdit1;
         private DevExpress.XtraRichEdit.Design.RepositoryItemRichEditStyleEdit repositoryItemRichEditStyleEdit1;
         private DevExpress.XtraBars.BarButtonItem iInterpolation;
-        private DevExpress.XtraBars.BarButtonItem iRecovery;
+        private DevExpress.XtraBars.BarButtonItem iSave;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarEditItem iStartDate;
@@ -515,5 +542,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.SplitterItem splitterItem1;
+        private DevExpress.XtraBars.BarEditItem iInterval;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
     }
 }

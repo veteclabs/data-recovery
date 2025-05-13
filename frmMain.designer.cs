@@ -1,5 +1,5 @@
 using DevExpress.XtraEditors.Repository;
-namespace DataRecorvery
+namespace Plate
 {
     partial class frmMain {
         protected override void Dispose(bool disposing) {
@@ -48,9 +48,8 @@ namespace DataRecorvery
             this.iFindResults = new DevExpress.XtraBars.BarButtonItem();
             this.iOutput = new DevExpress.XtraBars.BarButtonItem();
             this.bar4 = new DevExpress.XtraBars.Bar();
-            this.iStatus1 = new DevExpress.XtraBars.BarStaticItem();
-            this.barEditItem2 = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemProgressBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
+            this.barEditItem3 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemMarqueeProgressBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemMarqueeProgressBar();
             this.bar5 = new DevExpress.XtraBars.Bar();
             this.iLoadLayout = new DevExpress.XtraBars.BarButtonItem();
             this.iSaveLayout = new DevExpress.XtraBars.BarButtonItem();
@@ -63,21 +62,20 @@ namespace DataRecorvery
             this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.dockPanel6 = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel6_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.ucToolbox1 = new DataRecorvery.ucToolbox();
-            this.mainMenuSvgImages = new DevExpress.Utils.SvgImageCollection(this.components);
-            this.panelContainer2 = new DevExpress.XtraBars.Docking.DockPanel();
-            this.dockPanel5 = new DevExpress.XtraBars.Docking.DockPanel();
-            this.dockPanel5_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.ucOutput1 = new DataRecorvery.ucOutput();
-            this.dockPanel3 = new DevExpress.XtraBars.Docking.DockPanel();
-            this.dockPanel3_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.ucTaskList1 = new DataRecorvery.ucTaskList();
+            this.ucToolbox1 = new Plate.ucToolbox();
             this.dockPanel4 = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel4_Container = new DevExpress.XtraBars.Docking.ControlContainer();
             this.textBox1 = new DevExpress.XtraEditors.MemoEdit();
+            this.dockPanel5 = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel5_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.ucOutput1 = new Plate.ucOutput();
+            this.dockPanel3 = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel3_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.ucTaskList1 = new Plate.ucTaskList();
+            this.mainMenuSvgImages = new DevExpress.Utils.SvgImageCollection(this.components);
             this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.webAccessExplorer = new DataRecorvery.ucSCADAExplorer();
+            this.webAccessExplorer = new Plate.ucSCADAExplorer();
             this.siFile = new DevExpress.XtraBars.BarSubItem();
             this.siNew = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
@@ -99,17 +97,24 @@ namespace DataRecorvery
             this.iReplace = new DevExpress.XtraBars.BarButtonItem();
             this.siWindow = new DevExpress.XtraBars.BarSubItem();
             this.barDockingMenuItem1 = new DevExpress.XtraBars.BarDockingMenuItem();
+            this.iStatus1 = new DevExpress.XtraBars.BarStaticItem();
             this.siLayouts = new DevExpress.XtraBars.BarSubItem();
             this.bsiHelp = new DevExpress.XtraBars.BarSubItem();
             this.iAbout = new DevExpress.XtraBars.BarButtonItem();
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.barHeaderItem1 = new DevExpress.XtraBars.BarHeaderItem();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.barEditItem2 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemProgressBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
             this.repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
             this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
             this.fileTypeSvgImages = new DevExpress.Utils.SvgImageCollection(this.components);
             this.toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
+            this.barEditItem4 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.iProgressbar = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemProgressBar2 = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryImageComboBox1)).BeginInit();
@@ -118,27 +123,29 @@ namespace DataRecorvery
             this.popupControlContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.classViewSvgImages)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMarqueeProgressBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
             this.dockPanel6.SuspendLayout();
             this.dockPanel6_Container.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainMenuSvgImages)).BeginInit();
-            this.panelContainer2.SuspendLayout();
+            this.dockPanel4.SuspendLayout();
+            this.dockPanel4_Container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textBox1.Properties)).BeginInit();
             this.dockPanel5.SuspendLayout();
             this.dockPanel5_Container.SuspendLayout();
             this.dockPanel3.SuspendLayout();
             this.dockPanel3_Container.SuspendLayout();
-            this.dockPanel4.SuspendLayout();
-            this.dockPanel4_Container.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBox1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainMenuSvgImages)).BeginInit();
             this.dockPanel1.SuspendLayout();
             this.dockPanel1_Container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageComboBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTypeSvgImages)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // barManager
@@ -217,13 +224,19 @@ namespace DataRecorvery
             this.barHeaderItem1,
             this.barStaticItem1,
             this.iSettings,
-            this.barEditItem2});
-            this.barManager.MaxItemId = 82;
+            this.barEditItem2,
+            this.barEditItem3,
+            this.barEditItem4,
+            this.iProgressbar});
+            this.barManager.MaxItemId = 85;
             this.barManager.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryImageComboBox1,
             this.repositoryItemComboBox1,
             this.repositoryItemImageComboBox1,
-            this.repositoryItemProgressBar1});
+            this.repositoryItemProgressBar1,
+            this.repositoryItemMarqueeProgressBar1,
+            this.repositoryItemTextEdit1,
+            this.repositoryItemProgressBar2});
             this.barManager.StatusBar = this.bar4;
             this.barManager.Merge += new DevExpress.XtraBars.BarManagerMergeEventHandler(this.barManager1_Merge);
             this.barManager.UnMerge += new DevExpress.XtraBars.BarManagerMergeEventHandler(this.barManager1_UnMerge);
@@ -345,11 +358,12 @@ namespace DataRecorvery
             // 
             // iStart
             // 
-            this.iStart.Caption = "Start";
+            this.iStart.Caption = "Recovery";
             this.iStart.CategoryGuid = new System.Guid("fbaaf85d-943d-4ccd-8517-fc398efe9c7b");
             this.iStart.Hint = "Start";
             this.iStart.Id = 34;
             this.iStart.ImageOptions.ImageIndex = 22;
+            this.iStart.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("iStart.ImageOptions.SvgImage")));
             this.iStart.Name = "iStart";
             this.iStart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iStart_ItemClick);
             // 
@@ -546,8 +560,7 @@ namespace DataRecorvery
             this.bar4.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             this.bar4.FloatLocation = new System.Drawing.Point(25, 282);
             this.bar4.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.iStatus1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barEditItem2)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iProgressbar)});
             this.bar4.OptionsBar.AllowQuickCustomization = false;
             this.bar4.OptionsBar.DrawDragBorder = false;
             this.bar4.OptionsBar.DrawSizeGrip = true;
@@ -555,26 +568,17 @@ namespace DataRecorvery
             this.bar4.OptionsBar.UseWholeRow = true;
             this.bar4.Text = "StatusBar";
             // 
-            // iStatus1
+            // barEditItem3
             // 
-            this.iStatus1.Border = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.iStatus1.Caption = "Ready";
-            this.iStatus1.CategoryGuid = new System.Guid("d3532f9f-c716-4c40-8731-d110e1a41e64");
-            this.iStatus1.Id = 50;
-            this.iStatus1.Name = "iStatus1";
+            this.barEditItem3.Caption = "Status";
+            this.barEditItem3.Edit = this.repositoryItemMarqueeProgressBar1;
+            this.barEditItem3.Id = 82;
+            this.barEditItem3.Name = "barEditItem3";
+            this.barEditItem3.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             // 
-            // barEditItem2
+            // repositoryItemMarqueeProgressBar1
             // 
-            this.barEditItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.barEditItem2.Caption = "Ready";
-            this.barEditItem2.Edit = this.repositoryItemProgressBar1;
-            this.barEditItem2.Id = 81;
-            this.barEditItem2.Name = "barEditItem2";
-            this.barEditItem2.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.Caption;
-            // 
-            // repositoryItemProgressBar1
-            // 
-            this.repositoryItemProgressBar1.Name = "repositoryItemProgressBar1";
+            this.repositoryItemMarqueeProgressBar1.Name = "repositoryItemMarqueeProgressBar1";
             // 
             // bar5
             // 
@@ -636,9 +640,9 @@ namespace DataRecorvery
             // 
             this.barDockControl2.CausesValidation = false;
             this.barDockControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl2.Location = new System.Drawing.Point(0, 639);
+            this.barDockControl2.Location = new System.Drawing.Point(0, 642);
             this.barDockControl2.Manager = this.barManager;
-            this.barDockControl2.Size = new System.Drawing.Size(1133, 23);
+            this.barDockControl2.Size = new System.Drawing.Size(1133, 20);
             // 
             // barDockControl3
             // 
@@ -646,7 +650,7 @@ namespace DataRecorvery
             this.barDockControl3.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControl3.Location = new System.Drawing.Point(0, 55);
             this.barDockControl3.Manager = this.barManager;
-            this.barDockControl3.Size = new System.Drawing.Size(0, 584);
+            this.barDockControl3.Size = new System.Drawing.Size(0, 587);
             // 
             // barDockControl4
             // 
@@ -654,18 +658,20 @@ namespace DataRecorvery
             this.barDockControl4.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControl4.Location = new System.Drawing.Point(1133, 55);
             this.barDockControl4.Manager = this.barManager;
-            this.barDockControl4.Size = new System.Drawing.Size(0, 584);
+            this.barDockControl4.Size = new System.Drawing.Size(0, 587);
             // 
             // dockManager
             // 
             this.dockManager.Controller = this.barAndDockingController;
             this.dockManager.Form = this;
             this.dockManager.HiddenPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
-            this.dockPanel6});
+            this.dockPanel6,
+            this.dockPanel4,
+            this.dockPanel3});
             this.dockManager.Images = this.mainMenuSvgImages;
             this.dockManager.MenuManager = this.barManager;
             this.dockManager.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
-            this.panelContainer2,
+            this.dockPanel5,
             this.dockPanel1});
             this.dockManager.TopZIndexControls.AddRange(new string[] {
             "DevExpress.XtraBars.BarDockControl",
@@ -703,6 +709,108 @@ namespace DataRecorvery
             this.ucToolbox1.Name = "ucToolbox1";
             this.ucToolbox1.Size = new System.Drawing.Size(193, 555);
             this.ucToolbox1.TabIndex = 0;
+            // 
+            // dockPanel4
+            // 
+            this.dockPanel4.Controls.Add(this.dockPanel4_Container);
+            this.dockPanel4.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+            this.dockPanel4.FloatSize = new System.Drawing.Size(304, 139);
+            this.dockPanel4.ID = new System.Guid("47b3ea95-3900-46d6-b24c-5f3a779b1ae7");
+            this.dockPanel4.Location = new System.Drawing.Point(3, 27);
+            this.dockPanel4.Name = "dockPanel4";
+            this.dockPanel4.OriginalSize = new System.Drawing.Size(1105, 143);
+            this.dockPanel4.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+            this.dockPanel4.SavedIndex = 1;
+            this.dockPanel4.SavedParent = this.dockPanel5;
+            this.dockPanel4.SavedTabbed = true;
+            this.dockPanel4.Size = new System.Drawing.Size(1127, 143);
+            this.dockPanel4.Text = "Find Results";
+            this.dockPanel4.Visibility = DevExpress.XtraBars.Docking.DockVisibility.Hidden;
+            // 
+            // dockPanel4_Container
+            // 
+            this.dockPanel4_Container.Controls.Add(this.textBox1);
+            this.dockPanel4_Container.Location = new System.Drawing.Point(0, 0);
+            this.dockPanel4_Container.Name = "dockPanel4_Container";
+            this.dockPanel4_Container.Size = new System.Drawing.Size(1127, 143);
+            this.dockPanel4_Container.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.EditValue = "";
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Properties.Appearance.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.textBox1.Properties.Appearance.Options.UseFont = true;
+            this.textBox1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.textBox1.Size = new System.Drawing.Size(1127, 143);
+            this.textBox1.TabIndex = 0;
+            // 
+            // dockPanel5
+            // 
+            this.dockPanel5.Controls.Add(this.dockPanel5_Container);
+            this.dockPanel5.Dock = DevExpress.XtraBars.Docking.DockingStyle.Bottom;
+            this.dockPanel5.FloatSize = new System.Drawing.Size(304, 139);
+            this.dockPanel5.ID = new System.Guid("dbdb0ba9-5443-476b-93ad-ec35678d61ef");
+            this.dockPanel5.Location = new System.Drawing.Point(0, 442);
+            this.dockPanel5.Name = "dockPanel5";
+            this.dockPanel5.OriginalSize = new System.Drawing.Size(200, 200);
+            this.dockPanel5.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Bottom;
+            this.dockPanel5.SavedIndex = 0;
+            this.dockPanel5.Size = new System.Drawing.Size(1133, 200);
+            this.dockPanel5.Text = "Output";
+            // 
+            // dockPanel5_Container
+            // 
+            this.dockPanel5_Container.Controls.Add(this.ucOutput1);
+            this.dockPanel5_Container.Location = new System.Drawing.Point(3, 27);
+            this.dockPanel5_Container.Name = "dockPanel5_Container";
+            this.dockPanel5_Container.Size = new System.Drawing.Size(1127, 170);
+            this.dockPanel5_Container.TabIndex = 0;
+            // 
+            // ucOutput1
+            // 
+            this.ucOutput1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucOutput1.Location = new System.Drawing.Point(0, 0);
+            this.ucOutput1.Name = "ucOutput1";
+            this.ucOutput1.Size = new System.Drawing.Size(1127, 170);
+            this.ucOutput1.TabIndex = 0;
+            // 
+            // dockPanel3
+            // 
+            this.dockPanel3.Controls.Add(this.dockPanel3_Container);
+            this.dockPanel3.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+            this.dockPanel3.FloatSize = new System.Drawing.Size(304, 139);
+            this.dockPanel3.ID = new System.Guid("7351d5e2-6da1-45c0-a5b6-13e4e7d7a56e");
+            this.dockPanel3.Location = new System.Drawing.Point(3, 27);
+            this.dockPanel3.Name = "dockPanel3";
+            this.dockPanel3.OriginalSize = new System.Drawing.Size(1105, 143);
+            this.dockPanel3.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+            this.dockPanel3.SavedIndex = 0;
+            this.dockPanel3.SavedParent = this.dockPanel5;
+            this.dockPanel3.SavedTabbed = true;
+            this.dockPanel3.Size = new System.Drawing.Size(1127, 143);
+            this.dockPanel3.TabText = "Task List";
+            this.dockPanel3.Text = "Task List - 0 Build Errors";
+            this.dockPanel3.Visibility = DevExpress.XtraBars.Docking.DockVisibility.Hidden;
+            // 
+            // dockPanel3_Container
+            // 
+            this.dockPanel3_Container.Controls.Add(this.ucTaskList1);
+            this.dockPanel3_Container.Location = new System.Drawing.Point(0, 0);
+            this.dockPanel3_Container.Name = "dockPanel3_Container";
+            this.dockPanel3_Container.Size = new System.Drawing.Size(1127, 143);
+            this.dockPanel3_Container.TabIndex = 0;
+            // 
+            // ucTaskList1
+            // 
+            this.ucTaskList1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTaskList1.Location = new System.Drawing.Point(0, 0);
+            this.ucTaskList1.Margin = new System.Windows.Forms.Padding(2);
+            this.ucTaskList1.Name = "ucTaskList1";
+            this.ucTaskList1.Size = new System.Drawing.Size(1127, 143);
+            this.ucTaskList1.TabIndex = 0;
             // 
             // mainMenuSvgImages
             // 
@@ -745,112 +853,6 @@ namespace DataRecorvery
             this.mainMenuSvgImages.Add("36_Information_blue_6227", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mainMenuSvgImages.36_Information_blue_6227"))));
             this.mainMenuSvgImages.Add("37_NewWebSite_6288", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mainMenuSvgImages.37_NewWebSite_6288"))));
             // 
-            // panelContainer2
-            // 
-            this.panelContainer2.ActiveChild = this.dockPanel5;
-            this.panelContainer2.Controls.Add(this.dockPanel3);
-            this.panelContainer2.Controls.Add(this.dockPanel4);
-            this.panelContainer2.Controls.Add(this.dockPanel5);
-            this.panelContainer2.Dock = DevExpress.XtraBars.Docking.DockingStyle.Bottom;
-            this.panelContainer2.FloatSize = new System.Drawing.Size(304, 139);
-            this.panelContainer2.ID = new System.Guid("ec7b92c0-cfe1-43c3-9ff0-c24e6320f016");
-            this.panelContainer2.Location = new System.Drawing.Point(0, 439);
-            this.panelContainer2.Name = "panelContainer2";
-            this.panelContainer2.OriginalSize = new System.Drawing.Size(200, 200);
-            this.panelContainer2.Size = new System.Drawing.Size(1133, 200);
-            this.panelContainer2.Tabbed = true;
-            this.panelContainer2.Text = "panelContainer2";
-            // 
-            // dockPanel5
-            // 
-            this.dockPanel5.Controls.Add(this.dockPanel5_Container);
-            this.dockPanel5.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-            this.dockPanel5.FloatSize = new System.Drawing.Size(304, 139);
-            this.dockPanel5.ID = new System.Guid("dbdb0ba9-5443-476b-93ad-ec35678d61ef");
-            this.dockPanel5.Location = new System.Drawing.Point(3, 27);
-            this.dockPanel5.Name = "dockPanel5";
-            this.dockPanel5.OriginalSize = new System.Drawing.Size(1105, 143);
-            this.dockPanel5.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel5.Text = "Output";
-            // 
-            // dockPanel5_Container
-            // 
-            this.dockPanel5_Container.Controls.Add(this.ucOutput1);
-            this.dockPanel5_Container.Location = new System.Drawing.Point(0, 0);
-            this.dockPanel5_Container.Name = "dockPanel5_Container";
-            this.dockPanel5_Container.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel5_Container.TabIndex = 0;
-            // 
-            // ucOutput1
-            // 
-            this.ucOutput1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucOutput1.Location = new System.Drawing.Point(0, 0);
-            this.ucOutput1.Name = "ucOutput1";
-            this.ucOutput1.Size = new System.Drawing.Size(1127, 143);
-            this.ucOutput1.TabIndex = 0;
-            // 
-            // dockPanel3
-            // 
-            this.dockPanel3.Controls.Add(this.dockPanel3_Container);
-            this.dockPanel3.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-            this.dockPanel3.FloatSize = new System.Drawing.Size(304, 139);
-            this.dockPanel3.ID = new System.Guid("7351d5e2-6da1-45c0-a5b6-13e4e7d7a56e");
-            this.dockPanel3.Location = new System.Drawing.Point(3, 27);
-            this.dockPanel3.Name = "dockPanel3";
-            this.dockPanel3.OriginalSize = new System.Drawing.Size(1105, 143);
-            this.dockPanel3.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel3.TabText = "Task List";
-            this.dockPanel3.Text = "Task List - 0 Build Errors";
-            // 
-            // dockPanel3_Container
-            // 
-            this.dockPanel3_Container.Controls.Add(this.ucTaskList1);
-            this.dockPanel3_Container.Location = new System.Drawing.Point(0, 0);
-            this.dockPanel3_Container.Name = "dockPanel3_Container";
-            this.dockPanel3_Container.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel3_Container.TabIndex = 0;
-            // 
-            // ucTaskList1
-            // 
-            this.ucTaskList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTaskList1.Location = new System.Drawing.Point(0, 0);
-            this.ucTaskList1.Margin = new System.Windows.Forms.Padding(2);
-            this.ucTaskList1.Name = "ucTaskList1";
-            this.ucTaskList1.Size = new System.Drawing.Size(1127, 143);
-            this.ucTaskList1.TabIndex = 0;
-            // 
-            // dockPanel4
-            // 
-            this.dockPanel4.Controls.Add(this.dockPanel4_Container);
-            this.dockPanel4.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-            this.dockPanel4.FloatSize = new System.Drawing.Size(304, 139);
-            this.dockPanel4.ID = new System.Guid("47b3ea95-3900-46d6-b24c-5f3a779b1ae7");
-            this.dockPanel4.Location = new System.Drawing.Point(3, 27);
-            this.dockPanel4.Name = "dockPanel4";
-            this.dockPanel4.OriginalSize = new System.Drawing.Size(1105, 143);
-            this.dockPanel4.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel4.Text = "Find Results";
-            // 
-            // dockPanel4_Container
-            // 
-            this.dockPanel4_Container.Controls.Add(this.textBox1);
-            this.dockPanel4_Container.Location = new System.Drawing.Point(0, 0);
-            this.dockPanel4_Container.Name = "dockPanel4_Container";
-            this.dockPanel4_Container.Size = new System.Drawing.Size(1127, 143);
-            this.dockPanel4_Container.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.EditValue = "";
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Properties.Appearance.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.textBox1.Properties.Appearance.Options.UseFont = true;
-            this.textBox1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.textBox1.Size = new System.Drawing.Size(1127, 143);
-            this.textBox1.TabIndex = 0;
-            // 
             // dockPanel1
             // 
             this.dockPanel1.Controls.Add(this.dockPanel1_Container);
@@ -862,7 +864,7 @@ namespace DataRecorvery
             this.dockPanel1.OriginalSize = new System.Drawing.Size(325, 200);
             this.dockPanel1.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Right;
             this.dockPanel1.SavedIndex = 1;
-            this.dockPanel1.Size = new System.Drawing.Size(325, 384);
+            this.dockPanel1.Size = new System.Drawing.Size(325, 387);
             this.dockPanel1.TabText = "WebAccess Explorer";
             this.dockPanel1.Text = "WebAccess Explorer";
             // 
@@ -871,7 +873,7 @@ namespace DataRecorvery
             this.dockPanel1_Container.Controls.Add(this.webAccessExplorer);
             this.dockPanel1_Container.Location = new System.Drawing.Point(4, 26);
             this.dockPanel1_Container.Name = "dockPanel1_Container";
-            this.dockPanel1_Container.Size = new System.Drawing.Size(318, 355);
+            this.dockPanel1_Container.Size = new System.Drawing.Size(318, 358);
             this.dockPanel1_Container.TabIndex = 0;
             // 
             // webAccessExplorer
@@ -880,7 +882,7 @@ namespace DataRecorvery
             this.webAccessExplorer.Location = new System.Drawing.Point(0, 0);
             this.webAccessExplorer.Name = "webAccessExplorer";
             this.webAccessExplorer.Repository = null;
-            this.webAccessExplorer.Size = new System.Drawing.Size(318, 355);
+            this.webAccessExplorer.Size = new System.Drawing.Size(318, 358);
             this.webAccessExplorer.TabIndex = 0;
             this.webAccessExplorer.PropertiesItemClick += new System.EventHandler(this.solutionExplorer_PropertiesItemClick);
             this.webAccessExplorer.TreeViewItemClick += new System.EventHandler(this.solutionExplorer_TreeViewItemClick);
@@ -980,6 +982,7 @@ namespace DataRecorvery
             // 
             this.iSettings.Caption = "Se&tting";
             this.iSettings.Id = 80;
+            this.iSettings.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("iSettings.ImageOptions.SvgImage")));
             this.iSettings.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.S));
             this.iSettings.Name = "iSettings";
@@ -1080,6 +1083,14 @@ namespace DataRecorvery
             this.barDockingMenuItem1.Id = 72;
             this.barDockingMenuItem1.Name = "barDockingMenuItem1";
             // 
+            // iStatus1
+            // 
+            this.iStatus1.Border = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.iStatus1.Caption = "Ready";
+            this.iStatus1.CategoryGuid = new System.Guid("d3532f9f-c716-4c40-8731-d110e1a41e64");
+            this.iStatus1.Id = 50;
+            this.iStatus1.Name = "iStatus1";
+            // 
             // siLayouts
             // 
             this.siLayouts.Caption = "&Layouts";
@@ -1124,6 +1135,19 @@ namespace DataRecorvery
             this.barStaticItem1.Id = 78;
             this.barStaticItem1.LeftIndent = 21;
             this.barStaticItem1.Name = "barStaticItem1";
+            // 
+            // barEditItem2
+            // 
+            this.barEditItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barEditItem2.Caption = "Ready";
+            this.barEditItem2.Edit = this.repositoryItemProgressBar1;
+            this.barEditItem2.Id = 81;
+            this.barEditItem2.Name = "barEditItem2";
+            this.barEditItem2.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.Caption;
+            // 
+            // repositoryItemProgressBar1
+            // 
+            this.repositoryItemProgressBar1.Name = "repositoryItemProgressBar1";
             // 
             // repositoryItemImageComboBox1
             // 
@@ -1173,6 +1197,29 @@ namespace DataRecorvery
             this.toolbarFormControl1.TitleItemLinks.Add(this.barStaticItem1);
             this.toolbarFormControl1.ToolbarForm = this;
             // 
+            // barEditItem4
+            // 
+            this.barEditItem4.Caption = "barEditItem4";
+            this.barEditItem4.Edit = this.repositoryItemTextEdit1;
+            this.barEditItem4.Id = 83;
+            this.barEditItem4.Name = "barEditItem4";
+            // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            // 
+            // iProgressbar
+            // 
+            this.iProgressbar.Caption = "Ready";
+            this.iProgressbar.Edit = this.repositoryItemProgressBar2;
+            this.iProgressbar.Id = 84;
+            this.iProgressbar.Name = "iProgressbar";
+            // 
+            // repositoryItemProgressBar2
+            // 
+            this.repositoryItemProgressBar2.Name = "repositoryItemProgressBar2";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1180,7 +1227,7 @@ namespace DataRecorvery
             this.ClientSize = new System.Drawing.Size(1133, 662);
             this.Controls.Add(this.popupControlContainer1);
             this.Controls.Add(this.dockPanel1);
-            this.Controls.Add(this.panelContainer2);
+            this.Controls.Add(this.dockPanel5);
             this.Controls.Add(this.barDockControl3);
             this.Controls.Add(this.barDockControl4);
             this.Controls.Add(this.barDockControl2);
@@ -1202,27 +1249,29 @@ namespace DataRecorvery
             this.popupControlContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.classViewSvgImages)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMarqueeProgressBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
             this.dockPanel6.ResumeLayout(false);
             this.dockPanel6_Container.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainMenuSvgImages)).EndInit();
-            this.panelContainer2.ResumeLayout(false);
+            this.dockPanel4.ResumeLayout(false);
+            this.dockPanel4_Container.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.textBox1.Properties)).EndInit();
             this.dockPanel5.ResumeLayout(false);
             this.dockPanel5_Container.ResumeLayout(false);
             this.dockPanel3.ResumeLayout(false);
             this.dockPanel3_Container.ResumeLayout(false);
-            this.dockPanel4.ResumeLayout(false);
-            this.dockPanel4_Container.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.textBox1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainMenuSvgImages)).EndInit();
             this.dockPanel1.ResumeLayout(false);
             this.dockPanel1_Container.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageComboBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTypeSvgImages)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1272,7 +1321,7 @@ namespace DataRecorvery
         private DevExpress.XtraBars.BarButtonItem iToolbox;
         private DevExpress.XtraBars.BarButtonItem iClassView;
         private DevExpress.XtraEditors.MemoEdit textBox1;
-        private DataRecorvery.ucSCADAExplorer webAccessExplorer;
+        private Plate.ucSCADAExplorer webAccessExplorer;
         private DevExpress.XtraBars.BarButtonItem iTaskList;
         private DevExpress.XtraBars.BarButtonItem iFindResults;
         private DevExpress.XtraBars.BarButtonItem iOutput;
@@ -1296,7 +1345,6 @@ namespace DataRecorvery
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel4_Container;
         private DevExpress.XtraBars.Docking.DockPanel dockPanel5;
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel5_Container;
-        private DevExpress.XtraBars.Docking.DockPanel panelContainer2;
         private DevExpress.XtraBars.BarAndDockingController barAndDockingController;
         private DevExpress.XtraBars.Docking.DockPanel dockPanel6;
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel6_Container;
@@ -1322,5 +1370,11 @@ namespace DataRecorvery
         private ucOutput ucOutput1;
         private DevExpress.XtraBars.BarEditItem barEditItem2;
         private RepositoryItemProgressBar repositoryItemProgressBar1;
+        private DevExpress.XtraBars.BarEditItem barEditItem3;
+        private RepositoryItemMarqueeProgressBar repositoryItemMarqueeProgressBar1;
+        private DevExpress.XtraBars.BarEditItem iProgressbar;
+        private RepositoryItemProgressBar repositoryItemProgressBar2;
+        private DevExpress.XtraBars.BarEditItem barEditItem4;
+        private RepositoryItemTextEdit repositoryItemTextEdit1;
     }
 }

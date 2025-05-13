@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using DevExpress.XtraRichEdit;
 
-namespace DataRecorvery
+namespace Plate
 {
     public partial class ucCodeEditor : UserControl {
         public ucCodeEditor() {

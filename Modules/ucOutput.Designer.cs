@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery {
+﻿namespace Plate {
     partial class ucOutput {
         /// <summary> 
         /// Required designer variable.

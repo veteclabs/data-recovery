@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery {
+﻿namespace Plate {
     partial class ucToolbox {
         /// <summary> 
         /// Required designer variable.

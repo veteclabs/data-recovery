@@ -1,5 +1,5 @@
-﻿using DataRecorvery.Configurations;
-using DataRecorvery.Domain.Models;
+﻿using Plate.Configurations;
+using Plate.Domain.Models;
 using DevExpress.XtraEditors;
 using InfluxDB.Client;
 using MySqlConnector;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataRecorvery.UI.Forms
+namespace Plate.UI.Forms
 {
     public partial class frmSettings : DevExpress.XtraEditors.XtraForm
     {
@@ -60,7 +60,7 @@ namespace DataRecorvery.UI.Forms
             string newLine = $"<b><color={color}>{icon} {message}</color></b>";
 
             // 기존 텍스트에 누적
-            labelItem.Text += "<br>" + newLine;
+             labelItem.Text += "<br>" + newLine;
 
             // UI 반영을 위해 필요 시
             //Application.DoEvents();
@@ -92,7 +92,7 @@ namespace DataRecorvery.UI.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("설정을 불러오는 중 오류 발생:\n" + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XtraMessageBox.Show("An error occurred while loading settings:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private async void btnSave_Click(object sender, EventArgs e)
@@ -123,7 +123,8 @@ namespace DataRecorvery.UI.Forms
 
             // 모든 테스트 성공 시 설정 저장
             ConfigManager.SaveConfig(_settings);
-            MessageBox.Show("설정이 저장되었습니다.", "성공", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show("Settings have been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
         /// <summary>
         /// InfluxDB, MDB, Database 연결 테스트를 수행.
@@ -133,11 +134,12 @@ namespace DataRecorvery.UI.Forms
         private async Task<bool> TestConnections()
         {
             labelControl1.Text = string.Empty;
+            
             // 1. InfluxDB 연결 테스트
             try
             {
                 // 연결 테스트
-                bool influxSuccess = TestInfluxDbConnection(_settings.Influxdb);
+                bool influxSuccess = await Task.Run(() => TestInfluxDbConnection(_settings.Influxdb));
                 await UpdateTestStatusAsync(labelControl1, "InfluxDB", influxSuccess ? "success" : "fail");
 
                 if (!influxSuccess)
@@ -155,7 +157,7 @@ namespace DataRecorvery.UI.Forms
             // 2. MDB 파일 연결 테스트 및 pNode 테이블 조회 (ProjNodeId)
             try
             {
-                string projNodeId = TestMdbConnection(_settings.Scada.FilePath);
+                string projNodeId = await Task.Run(() => TestMdbConnection(_settings.Scada.FilePath));
                 // 연결 테스트
                 bool mdbSuccess = !string.IsNullOrEmpty(projNodeId);
                 await UpdateTestStatusAsync(labelControl1, "MDB 파일", mdbSuccess ? "success" : "fail");
@@ -176,7 +178,7 @@ namespace DataRecorvery.UI.Forms
             // 3. Database (MariaDB) 연결 테스트
             try
             {
-                bool dbSuccess = TestDatabaseConnection(_settings.DatabaseConfig);
+                bool dbSuccess = await Task.Run(() => TestDatabaseConnection(_settings.DatabaseConfig));
                 await UpdateTestStatusAsync(labelControl1, "Database", dbSuccess ? "success" : "fail");
 
                 if (!dbSuccess)
@@ -280,13 +282,33 @@ namespace DataRecorvery.UI.Forms
             {
                 Title = "SCADA MDB 파일 선택",
                 Filter = "Access DB (*.mdb)|*.mdb|모든 파일 (*.*)|*.*",
-                RestoreDirectory = true
+                RestoreDirectory = true,
+                InitialDirectory = @"C:\" // <- 여기 추가
+
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 beScadaFilePath.Text = openFileDialog.FileName;
             }
+        }
+
+        private void btnConnectionMdb_Click(object sender, EventArgs e)
+        {
+            string projNodeId = TestMdbConnection(_settings.Scada.FilePath);
+
+        }
+
+        private void btnConnectionMariadb_Click(object sender, EventArgs e)
+        {
+            bool dbSuccess = TestDatabaseConnection(_settings.DatabaseConfig);
+
+        }
+
+        private void btnConnectionInfluxdb_Click(object sender, EventArgs e)
+        {
+            bool influxSuccess = TestInfluxDbConnection(_settings.Influxdb);
+
         }
     }
 }

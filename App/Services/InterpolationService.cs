@@ -1,11 +1,11 @@
-﻿using DataRecorvery.Domain.Models;
+﻿using Plate.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRecorvery.App.Services
+namespace Plate.App.Services
 {
     public class InterpolationService
     {

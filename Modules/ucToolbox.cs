@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using DevExpress.XtraNavBar;
 
-namespace DataRecorvery
+namespace Plate
 {
     public partial class ucToolbox : UserControl {
         public ucToolbox() {

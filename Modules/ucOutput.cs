@@ -5,9 +5,9 @@ using Serilog;
 using Serilog.Core;
 using System;
 using Microsoft.Extensions.Logging;
-using DataRecorvery.Modules;
+using Plate.Modules;
 
-namespace DataRecorvery
+namespace Plate
 {
     public partial class ucOutput : BaseModule
     {
@@ -19,11 +19,7 @@ namespace DataRecorvery
         }
         internal override void ShowModule(bool firstShow)
         {
-            Log.Logger = new LoggerConfiguration()
-.MinimumLevel.Debug()
-.WriteTo.File("./logs/general/log.txt", rollingInterval: RollingInterval.Day) // 일반 로그
-.WriteTo.File("./logs/errors/error.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Day) // 에러 로그 전용 파일
-.CreateLogger();
+           
 
             AppendLog("Start Application...");
         }

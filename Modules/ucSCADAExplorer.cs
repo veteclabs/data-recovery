@@ -1,14 +1,18 @@
-using DataRecorvery.Domain.Interfaces;
-using DataRecorvery.Modules;
+using Plate.Domain.Interfaces;
+using Plate.Modules;
+using DevExpress.ClipboardSource.SpreadsheetML;
+using DevExpress.XtraSplashScreen;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataRecorvery
+namespace Plate
 {
     public partial class ucSCADAExplorer : BaseModule
     {
@@ -21,7 +25,18 @@ namespace DataRecorvery
             InitTreeView();
             //AddAllNodes(iShow.Down);
         }
+        IOverlaySplashScreenHandle progressPanelHandle = null;
 
+        void ShowProgress()
+        {
+            progressPanelHandle = ShowProgressPanel();
+        }
+        void CloseProgress()
+        {
+            if (progressPanelHandle != null)
+                CloseProgressPanel(progressPanelHandle);
+
+        }
         private void InitTreeView() {
            
             treeView.OptionsView.ShowColumns = true;
@@ -89,59 +104,104 @@ namespace DataRecorvery
             OwnerForm.CheckedTags = checkedTags;
             OwnerForm.AppendLog("체크된 태그: " + string.Join(", ", checkedTags));
         }
-        public void PopulateTree()
+        public async void PopulateTreeSafeAsync()
         {
-            if (Repository == null)
-                throw new InvalidOperationException("Repository가 설정되지 않았습니다.");
+            // UI에 표시
+            BeginInvoke(new Action(() => ShowProgress()));
 
-            treeView.Nodes.Clear();
+            if (Repository == null)
+            {
+                BeginInvoke(new Action(() =>
+                    MessageBox.Show("Repository가 설정되지 않았습니다.", "오류")));
+                return;
+            }
+
+            // 데이터 로딩은 백그라운드에서 수행
+            var treeData = await Task.Run(() => LoadTreeData());
+
+            // UI에서 TreeList 조작
+            BeginInvoke(new Action(() =>
+            {
+                treeView.BeginUpdate();
+                treeView.Nodes.Clear();
+                AddTreeNodes(treeView, treeData);
+                treeView.ExpandAll();
+                treeView.EndUpdate();
+                CloseProgress();
+            }));
+        }
+        // UI Thread에서 실행됨
+        private void AddTreeNodes(TreeList treeView, List<TreeNodeData> nodes, TreeListNode parent = null)
+        {
+            foreach (var node in nodes)
+            {
+                // 올바른 AppendNode 사용
+                var newNode = treeView.AppendNode(new object[] { node.Text }, parent);
+                // 아이콘 인덱스는 속성으로 설정
+                newNode.ImageIndex = node.IconIndex;
+                newNode.SelectImageIndex = node.IconIndex;
+                AddTreeNodes(treeView, node.Children, newNode);
+            }
+        }
+        // Task.Run에서 호출됨 (UI 접근 없이 메모리 구조만 생성)
+        private List<TreeNodeData> LoadTreeData()
+        {
+            var result = new List<TreeNodeData>();
 
             foreach (var proj in Repository.GetProjects())
             {
-                var nProj = treeView.AppendNode(new object[] { proj.ProjName }, -1, -1, -1, 6);
+                var projNode = new TreeNodeData { Text = proj.ProjName };
+
                 foreach (var node in Repository.GetNodes(proj.ProjIdbw))
                 {
-                    var nNode = treeView.AppendNode(new object[] { node.NodeName }, nProj.Id, -1, -1, 6);
-                    
-                    var zeroTags = Repository.GetTags(0)
-                         .Where(t => t.DeviceIdbw == 0);
+                    var nodeNode = new TreeNodeData { Text = node.NodeName };
+
+                    var zeroTags = Repository.GetTags(0).Where(t => t.DeviceIdbw == 0).ToList();
 
                     if (zeroTags.Any(t => t.TagType == 3))
                     {
-                        var constNode = treeView.AppendNode(
-                            new object[] { "Constants" }, nNode.Id, -1, -1, /*icon*/6);
+                        var constNode = new TreeNodeData { Text = "Constants" };
                         foreach (var t in zeroTags.Where(t => t.TagType == 3))
-                            treeView.AppendNode(
-                                new object[] { t.TagName }, constNode.Id, -1, -1, 14);
+                            constNode.Children.Add(new TreeNodeData { Text = t.TagName, IconIndex = 14 });
+                        nodeNode.Children.Add(constNode);
                     }
 
                     if (zeroTags.Any(t => t.TagType == 1))
                     {
-                        var calcNode = treeView.AppendNode(
-                            new object[] { "Calculates" }, nNode.Id, -1, -1, /*icon*/6);
+                        var calcNode = new TreeNodeData { Text = "Calculates" };
                         foreach (var t in zeroTags.Where(t => t.TagType == 1))
-                            treeView.AppendNode(
-                                new object[] { t.TagName }, calcNode.Id, -1, -1, 14);
+                            calcNode.Children.Add(new TreeNodeData { Text = t.TagName, IconIndex = 14 });
+                        nodeNode.Children.Add(calcNode);
                     }
-
 
                     foreach (var port in Repository.GetComports(node.ProjNodeIdbw))
                     {
-                        var nPort = treeView.AppendNode(new object[] { "Port"+port.ComportIdbw + "(" + port.InterfaceName+")" }, nNode.Id, -1, -1, 6);
+                        var portNode = new TreeNodeData { Text = $"Port{port.ComportIdbw} ({port.InterfaceName})" };
+
                         foreach (var dev in Repository.GetDevices(port.ComportIdbw))
                         {
-                            var nDev = treeView.AppendNode(new object[] { dev.DeviceName }, nPort.Id, -1, -1, 6);
+                            var devNode = new TreeNodeData { Text = dev.DeviceName };
+
                             foreach (var tag in Repository.GetTags(dev.DeviceIdbw))
-                            {
-                                treeView.AppendNode(new object[] { tag.TagName }, nDev.Id, -1, -1, 14);
-                            }
+                                devNode.Children.Add(new TreeNodeData { Text = tag.TagName, IconIndex = 14 });
+
+                            portNode.Children.Add(devNode);
                         }
+
+                        nodeNode.Children.Add(portNode);
                     }
+
+                    projNode.Children.Add(nodeNode);
                 }
+
+                result.Add(projNode);
             }
 
-            treeView.ExpandAll();
+            return result;
         }
+
+        // UI Thread에서 실행됨
+
         void treeView_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e) {
             if(e.Node.Id == 1) 
                 e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
@@ -179,5 +239,11 @@ namespace DataRecorvery
             if (RefereshItemClick != null)
                 RefereshItemClick(sender, EventArgs.Empty);
         }
+    }
+    public class TreeNodeData
+    {
+        public string Text { get; set; }
+        public int IconIndex { get; set; } = 6;
+        public List<TreeNodeData> Children { get; set; } = new List<TreeNodeData>();
     }
 }

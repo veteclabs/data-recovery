@@ -1,10 +1,10 @@
-﻿using DataRecorvery.Domain.Models;
+﻿using Plate.Domain.Models;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
 
-namespace DataRecorvery.Configurations
+namespace Plate.Configurations
 {
     public static class ConfigManager
     {

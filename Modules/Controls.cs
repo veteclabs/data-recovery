@@ -2,13 +2,14 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRecorvery.Modules
+namespace Plate.Modules
 {
     public class BaseControl : XtraUserControl
     {
@@ -40,7 +41,14 @@ namespace DataRecorvery.Modules
     {
         public BaseModule() { }
         private frmMain instance;
-
+        public IOverlaySplashScreenHandle ShowProgressPanel()
+        {
+            return SplashScreenManager.ShowOverlayForm(this, OverlayWindowOptions.Default);
+        }
+        public void CloseProgressPanel(IOverlaySplashScreenHandle handle)
+        {
+            SplashScreenManager.CloseOverlayForm(handle);
+        }
         internal frmMain OwnerForm
         {
             get

@@ -1,25 +1,36 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using DataRecorvery.Configurations;
-using DataRecorvery.Domain.Models;
-using DataRecorvery.Infrastructure.Scada;
-using DataRecorvery.Modules;
-using DataRecorvery.UI.Forms;
+using Plate.Configurations;
+using Plate.Domain.Models;
+using Plate.Infrastructure.Scada;
+using Plate.Modules;
+using Plate.UI.Component;
+using Plate.UI.Forms;
 using DevExpress.Skins;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraSplashScreen;
+using Serilog.Events;
+using Serilog;
+using System.Threading.Tasks;
 
-namespace DataRecorvery
+namespace Plate
 {
     public partial class frmMain : DevExpress.XtraBars.ToolbarForm.ToolbarForm {
         private AccessTagRepository _repo;
         private SettingsConfig _settings;
         public frmMain() {
             InitializeComponent();
-            this.Text = "Plate Data recovery";
-            Icon = DevExpress.Utils.ResourceImageHelperCore.CreateIconFromResourcesEx("DataRecorvery.Resources.AppIcon.ico", typeof(frmMain).Assembly);
+            Log.Logger = new LoggerConfiguration()
+.MinimumLevel.Debug()
+.WriteTo.File("./logs/general/log.txt", rollingInterval: RollingInterval.Day) // 일반 로그
+.WriteTo.File("./logs/errors/error.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Day) // 에러 로그 전용 파일
+.CreateLogger();
+            this.Text = "Plate Support Application";
+            barStaticItem1.Caption = this.Text;
+            Icon = DevExpress.Utils.ResourceImageHelperCore.CreateIconFromResourcesEx("Plate.Resources.AppIcon.ico", typeof(frmMain).Assembly);
             ApplyHeaderStaticItemAppearance();
         }
     
@@ -35,14 +46,24 @@ namespace DataRecorvery
         internal void LoadConfig()
         {
             _settings = ConfigManager.LoadConfig();
-            _repo = new AccessTagRepository(_settings.Scada);
-            webAccessExplorer.Repository = _repo;
-            webAccessExplorer.PopulateTree();
+
+            // UI 먼저 띄움
+            if (File.Exists(_settings.Scada.FilePath))
+            {
+                _repo = new AccessTagRepository(_settings.Scada);
+                webAccessExplorer.Repository = _repo;
+
+                // TreeView 로딩은 백그라운드에서 처리
+                _ = Task.Run(() => webAccessExplorer.PopulateTreeSafeAsync());
+            }
+            else
+            {
+                iSettings_ItemClick(null, null);
+            }
         }
         void frmMain_Load(object sender, System.EventArgs e) {
-            //this.fileStreams = Program.CreateResourceStreams();
             LoadConfig();
-           
+
             BeginInvoke(new MethodInvoker(InitApp));
         }
         void barManager1_Merge(object sender, BarManagerMergeEventArgs e) {
@@ -52,16 +73,10 @@ namespace DataRecorvery
             barManager.Bars["Edit"].UnMerge();
         }
         void InitApp() {
-            AddNewDocument("File.cs");
-            //DevExpress.Demos.ClassViewer.AddClassInfo(treeView1, this.GetType(), new object[] { this, new ucSolutionExplorer() });
-            SplashScreenManager.HideImage(500, this);
+            SplashScreenManager.CloseForm();
 
         }
-        void AddNewDocument(string fileName) {
-            //fileStreams[fileIndex].Seek(0, SeekOrigin.Begin);
-            //AddNewDocument(fileName, fileStreams[fileIndex]);
-            //fileIndex = (fileIndex++) % 3;
-        }
+   
         internal List<string> CheckedTags;
         internal void AppendLog(string log)
         {
@@ -84,7 +99,7 @@ namespace DataRecorvery
         }
         int projectIndex = 0;
         void iNewItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) {
-            AddNewDocument(string.Format("File{0}.cs", ++projectIndex));
+            //AddNewDocument(string.Format("File{0}.cs", ++projectIndex));
         }
         void iAbout_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) {
             //BarManager.About();
@@ -109,6 +124,17 @@ namespace DataRecorvery
         }
         void solutionExplorer_PropertiesItemClick(object sender, System.EventArgs e) {
             //dockPanel2.Show();
+        }
+        internal void SetProgressbar(int value)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => iProgressbar.EditValue = value));
+            }
+            else
+            {
+                iProgressbar.EditValue = value;
+            }
         }
         void solutionExplorer_TreeViewItemClick(object sender, System.EventArgs e) {
             DevExpress.XtraTreeList.TreeList treeView = sender as DevExpress.XtraTreeList.TreeList;
@@ -164,8 +190,10 @@ namespace DataRecorvery
         {
             tabbedView.BeginUpdate();
             ucGridControl control = new ucGridControl();
+            
             BaseDocument document = tabbedView.AddDocument(control);
-            document.ControlName = "Interpolation";
+            control.Name = iStart.Caption;
+            control.Text = iStart.Caption;
             document.Footer = Directory.GetCurrentDirectory();
             tabbedView.EndUpdate();
             tabbedView.Controller.Activate(document);
@@ -180,8 +208,11 @@ namespace DataRecorvery
         {
             using (frmSettings frm = new frmSettings())
             {
-                frm.StartPosition = FormStartPosition.CenterParent; // 코드로 설정해도 OK
-                frm.ShowDialog();
+                frm.StartPosition = FormStartPosition.CenterParent;
+                if(frm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadConfig();
+                };
             }
         }
 

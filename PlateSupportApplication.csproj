@@ -6,13 +6,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B4CA6FF7-6DD3-4555-BD3F-2EED9FF3EDC0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DataRecorvery</RootNamespace>
-    <AssemblyName>DataRecorvery</AssemblyName>
+    <RootNamespace>Plate</RootNamespace>
+    <AssemblyName>Plate Support Application</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+  <Target Name="DeleteXmlDocs" AfterTargets="Build">
+    <Delete Files="$(OutputPath)\*.xml" />
+  </Target>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -245,12 +251,6 @@
     <Compile Include="Infrastructure\Database\MariaTagRepository.cs" />
     <Compile Include="Infrastructure\InfluxDb\InfluxTagRepository.cs" />
     <Compile Include="Infrastructure\Scada\AccessTagRepository.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Modules\Controls.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -292,6 +292,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Forms\SplashScreen1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\SplashScreen1.Designer.cs">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Component\ucComparison.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -325,9 +331,6 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Modules\ucCodeEditor.resx">
       <DependentUpon>ucCodeEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -355,7 +358,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Forms\SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Component\ucComparison.resx">
       <DependentUpon>ucComparison.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,5 +402,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SplashScreen.png" />
+  </ItemGroup>
+<ItemGroup>
+  <None Update="ExternalDlls\**\*.dll">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Link>DLL\%(RecursiveDir)%(Filename)%(Extension)</Link>
+  </None>
+</ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

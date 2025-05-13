@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using DataRecorvery.Domain.Interfaces;
-using DataRecorvery.Domain.Models;
+using Plate.Domain.Interfaces;
+using Plate.Domain.Models;
 using MySqlConnector;
 using System;
 using System.Collections.Concurrent;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRecorvery.Infrastructure.Database
+namespace Plate.Infrastructure.Database
 {
     public class MariaTagRepository : IMariaTagRepository
     {
@@ -19,9 +19,11 @@ namespace DataRecorvery.Infrastructure.Database
         {
             _connectionString = connectionString;
         }
-        public List<MariaDataPoint> GetTagDataPerDay(string logDate,  string tagName, int projNodeId)
+        public List<MariaDataPoint> GetTagDataPerDay(string logDate, string tagName, int projNodeId)
         {
-            string sql = @"
+            try
+            {
+                string sql = @"
                             SELECT
                                 STR_TO_DATE(CONCAT(bt.LogDate, ' ', bt.LogTime), '%y/%m/%d %H:%i:%s') AS TimeStamp,
                                 bt.TagName AS TagName,
@@ -33,41 +35,52 @@ namespace DataRecorvery.Infrastructure.Database
                                 AND bt.TagName = @TagName
                                 AND bt.LogDate = @LogDate;";
 
-            using (var conn = new MySqlConnection(_connectionString))
-            {
-                return conn.Query<MariaDataPoint>(sql, new
+                using (var conn = new MySqlConnection(_connectionString))
                 {
-                    ProjNodeId = projNodeId,
-                    TagName = tagName,
-                    LogDate = logDate
-                }).ToList();
+                    return conn.Query<MariaDataPoint>(sql, new
+                    {
+                        ProjNodeId = projNodeId,
+                        TagName = tagName,
+                        LogDate = logDate
+                    }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
         public List<MariaDataPoint> GetTagData(List<string> tagNames, DateTime start, DateTime end, int projNodeId)
         {
-            
-            var result = new ConcurrentBag<MariaDataPoint>();
-
-            Parallel.ForEach(tagNames, tagName =>
+            try
             {
-                for (DateTime currentDay = start.Date; currentDay <= end.Date; currentDay = currentDay.AddDays(1))
+                var result = new ConcurrentBag<MariaDataPoint>();
+
+                Parallel.ForEach(tagNames, tagName =>
                 {
-                    string logDate = currentDay.ToString("yy-MM-dd").Replace("-", "/");
-
-                    var dailyPoints = GetTagDataPerDay(logDate, tagName, projNodeId);
-
-                    foreach (var dp in dailyPoints)
+                    for (DateTime currentDay = start.Date; currentDay <= end.Date; currentDay = currentDay.AddDays(1))
                     {
-                        dp.TagName = tagName;
-                        result.Add(dp);
-                    }
-                }
-            });
+                        string logDate = currentDay.ToString("yy-MM-dd").Replace("-", "/");
 
-            return result
-                .Where(x => x.TimeStamp != default) // 혹시 모르니 안전망
-                .OrderBy(x => x.TimeStamp)
-                .ToList();
+                        var dailyPoints = GetTagDataPerDay(logDate, tagName, projNodeId);
+
+                        foreach (var dp in dailyPoints)
+                        {
+                            dp.TagName = tagName;
+                            result.Add(dp);
+                        }
+                    }
+                });
+
+                return result
+                    .Where(x => x.TimeStamp != default) // 혹시 모르니 안전망
+                    .OrderBy(x => x.TimeStamp)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery {
+﻿namespace Plate {
     partial class ucCodeEditor {
         /// <summary> 
         /// Required designer variable.

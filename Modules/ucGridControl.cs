@@ -1,9 +1,10 @@
-﻿using DataRecorvery.App.Services;
-using DataRecorvery.Domain.Models;
-using DataRecorvery.Infrastructure.Database;
-using DataRecorvery.Infrastructure.InfluxDb;
-using DataRecorvery.UI.Component;
+﻿using Plate.App.Services;
+using Plate.Domain.Models;
+using Plate.Infrastructure.Database;
+using Plate.Infrastructure.InfluxDb;
+using Plate.UI.Component;
 using DevExpress.XtraEditors;
+using DevExpress.XtraSplashScreen;
 using InfluxData.Net.InfluxDb.Models.Responses;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataRecorvery.Modules
+namespace Plate.Modules
 {
     public partial class ucGridControl : BaseModule
     {
@@ -40,22 +41,45 @@ namespace DataRecorvery.Modules
 
             
         }
+        IOverlaySplashScreenHandle progressPanelHandle = null;
+
+        void ShowProgress()
+        {
+            progressPanelHandle = ShowProgressPanel();
+        }
+        void CloseProgress()
+        {
+            if (progressPanelHandle != null)
+                CloseProgressPanel(progressPanelHandle);
+
+        }
         private async void iSearch_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             iSearch.Enabled = false;
             iSearch.Caption = "📊 Loading data..";
 
+            ShowProgress();
+            OwnerForm.SetProgressbar(10);
+            string result = string.Empty;
             try
             {
-                if(_checkedTags is null)
+                if(_checkedTags is null || _checkedTags.Count == 0)
                 {
                     XtraMessageBox.Show($"Please select a tag.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    OwnerForm.SetProgressbar(0);
+
                     return;
                 }
+                OwnerForm.SetProgressbar(20);
+
                 var influxTask = LoadInfluxTagDataAsync();
                 var mariaTask = LoadMariaTagDataAsync();
 
+                OwnerForm.SetProgressbar(40);
+
                 await Task.WhenAll(influxTask, mariaTask);
+
+                OwnerForm.SetProgressbar(70);
 
                 var influxData = influxTask.Result;
                 var mariaData = mariaTask.Result;
@@ -63,15 +87,22 @@ namespace DataRecorvery.Modules
                 iSearch.Caption = "⏳ Fetching results...";
 
                 LoadCompareData(influxData, mariaData);
+
+                OwnerForm.SetProgressbar(100);
+                result = "Successfully Load.";
+
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show($"An error occurred while retrieving data:\n{ex.ToString()}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                result = $"An error occurred while retrieving data:\n{ex.ToString()}";
+                XtraMessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
+                OwnerForm.AppendLog(result);
                 iSearch.Enabled = true;
                 iSearch.Caption = "Search";
+                CloseProgress();
             }
         }
         private void LoadCompareData(List<InfluxDataPoint> influxData, List<MariaDataPoint> mariaData)
@@ -144,7 +175,8 @@ namespace DataRecorvery.Modules
             {
                 var influx = _settings.Influxdb;
                 var repo = new InfluxTagRepository(influx.Url, influx.Token, influx.Organizations, influx.Buckets);
-                var dataPoints = repo.GetTagData(_checkedTags, StartDate, EndDate);
+                int interval = Convert.ToInt16(iInterval.EditValue);
+                var dataPoints = repo.GetTagData(_checkedTags, StartDate, EndDate,interval);
                 return dataPoints;
             });
         }
@@ -171,7 +203,7 @@ namespace DataRecorvery.Modules
         private void iInterpolation_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             iInterpolation.Enabled = false;
-            iSearch.Caption = "⏳ Fetching results...";
+            iInterpolation.Caption = "⏳ Fetching results...";
             string result = string.Empty;
 
             try
@@ -183,12 +215,11 @@ namespace DataRecorvery.Modules
                 gvInterpolation.BestFitColumns();
                 gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
                 gvInterpolation.Columns["TimeStamp"].DisplayFormat.FormatString = "yyyy-MM-dd HH:mm";
-
+                result = "Succefully interpolation.";
             }
             catch (Exception ex)
             {
                 result = $"Error occurred during data interpolation:\r\n{ex.Message}";
-
                 XtraMessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -196,15 +227,15 @@ namespace DataRecorvery.Modules
                 OwnerForm.AppendLog(result);
 
                 iInterpolation.Enabled = true;
-                iSearch.Caption = "Interpolation";
-
+                iInterpolation.Caption = "Interpolation";
             }
         }
 
-        private async void iRecovery_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void iSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            iRecovery.Enabled = false;
-            iSearch.Caption = "⏳ Saving...";
+            iSave.Enabled = false;
+            iSave.Caption = "⏳ Saving...";
+            ShowProgress();
             string result = string.Empty;
             try
             {
@@ -235,8 +266,9 @@ namespace DataRecorvery.Modules
             finally
             {
                 OwnerForm.AppendLog(result);
-                iRecovery.Enabled = true;
-                iRecovery.Caption = "Recovery";
+                iSave.Enabled = true;
+                iSave.Caption = "Recovery";
+                CloseProgress();
             }
         }
     }

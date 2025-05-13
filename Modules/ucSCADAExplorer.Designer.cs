@@ -1,4 +1,4 @@
-namespace DataRecorvery {
+namespace Plate {
     partial class ucSCADAExplorer {
         protected override void Dispose(bool disposing) {
             if(disposing) {

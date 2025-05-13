@@ -1,13 +1,18 @@
-﻿using DevExpress.LookAndFeel;
+﻿using Plate.Resources;
+using Plate.UI.Forms;
+using DevExpress.LookAndFeel;
+using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
-namespace DataRecorvery
+namespace Plate
 {
     internal static class Program
     {
@@ -17,27 +22,16 @@ namespace DataRecorvery
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            System.Globalization.CultureInfo koKR = new System.Globalization.CultureInfo("ko-KR");
-            System.Threading.Thread.CurrentThread.CurrentCulture = koKR;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = koKR;
-            DevExpress.Utils.AppearanceObject.DefaultFont = new Font("Segoe UI", 8);
-            UserLookAndFeel.Default.SetSkinStyle(SkinStyle.WXI);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var koKR = new System.Globalization.CultureInfo("ko-KR");
+                Thread.CurrentThread.CurrentCulture = koKR;
+                Thread.CurrentThread.CurrentUICulture = koKR;
+                DevExpress.Utils.AppearanceObject.DefaultFont = new Font("Segoe UI", 8);
+                UserLookAndFeel.Default.SetSkinStyle(SkinSvgPalette.WXICompact.OfficeColorful);
 
-            var splashScreenImage = DevExpress.Utils.ResourceImageHelper.CreateImageFromResourcesEx("DataRecorvery.Resources.SplashScreenNew.png", CurrentAssembly);
-            DevExpress.XtraSplashScreen.SplashScreenManager.ShowImage(splashScreenImage, true, false);
-            Application.Run(new frmMain());
-        }
-        static Assembly currentAssemblyCore;
-        static Assembly CurrentAssembly
-        {
-            get
-            {
-                if (currentAssemblyCore == null)
-                    currentAssemblyCore = Assembly.GetExecutingAssembly();
-                return currentAssemblyCore;
-            }
+                SplashScreenManager.ShowForm(typeof(SplashScreen1));
+                Application.Run(new frmMain());
         }
     }
 }

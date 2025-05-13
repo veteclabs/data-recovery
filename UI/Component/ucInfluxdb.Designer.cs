@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery.UI.Component
+﻿namespace Plate.UI.Component
 {
     partial class ucInfluxdb
     {

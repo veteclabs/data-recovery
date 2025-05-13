@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRecorvery.Domain.Models
+namespace Plate.Domain.Models
 {
     public class Scada
     {

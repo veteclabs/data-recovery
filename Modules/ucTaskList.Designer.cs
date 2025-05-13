@@ -1,4 +1,4 @@
-﻿namespace DataRecorvery {
+﻿namespace Plate {
     partial class ucTaskList {
         /// <summary> 
         /// Required designer variable.

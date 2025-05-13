@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataRecorvery.UI.Component
+namespace Plate.UI.Component
 {
     public partial class ucComparison : UserControl
     {

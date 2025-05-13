@@ -1,5 +1,5 @@
-﻿using DataRecorvery.Domain.Interfaces;
-using DataRecorvery.Domain.Models;
+﻿using Plate.Domain.Interfaces;
+using Plate.Domain.Models;
 using DevExpress.XtraRichEdit.Import.Html;
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataRecorvery.Infrastructure.Scada
+namespace Plate.Infrastructure.Scada
 {
     public class AccessTagRepository : IAccessDbRepository
     {
 
         private readonly string _connStr;
 
-        public AccessTagRepository(DataRecorvery.Domain.Models.Scada scada)
+        public AccessTagRepository(Plate.Domain.Models.Scada scada)
         {
             // scada.ConnectionPath 에는 "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=…mdb;…" 형식의 문자열이 들어있다고 가정
             _connStr = scada.ConnectionPath;
