@@ -32,6 +32,11 @@ namespace Plate.Infrastructure.InfluxDb
         }
         public async Task RunAggregationAndTimeShiftAsync(string tagName, DateTime startDate)
         {
+            /*
+             start <> end 기간 먼저 삭제
+             minute 빼고 hour, day, month,year rollup query 돌리기 전 해당 구간 데이터 삭제
+             rollup 시 업데이트 오류 부분적으로 있음 250519
+             */
 
             // 시작일~1년 후 종료일 계산
             var startTime = startDate.Date;
@@ -45,7 +50,37 @@ namespace Plate.Infrastructure.InfluxDb
             timeUnits.AddRange(new[] { "hour", "day", "month", "year" });
 
             var queryApi = _client.GetQueryApi();
+            var deleteApi = _client.GetDeleteApi();
 
+            /**/
+            // -- 시작일~종료일 구간의 기존 롤업 데이터 삭제 --
+            // minute(원본) 측정치는 남기고, hour/day/month/year 측정치만 삭제
+            foreach (var unit in timeUnits)
+            {
+                var predicate = $"_measurement=\"{unit}\" AND tagname=\"{tagName}\"";
+                try
+                {
+                    // Delete(start, stop, predicate, bucket, org)
+                    await deleteApi.Delete(startTime, endTime, predicate, bucket: "history", org: _org);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                         $"Failed to delete rolled-up data for measurement '{unit}' and tag '{tagName}' " +
+                         $"from {startTime:yyyy-MM-ddTHH:mm:ssZ} to {endTime:yyyy-MM-ddTHH:mm:ssZ}.\n\n" +
+                         $"Exception: {ex.GetType().Name} – {ex.Message}",
+                         "Deletion Error",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Error);
+                    // 필요시 예외를 래핑해 상위로 전달
+                    throw new ArgumentException(
+                        $"Deletion error for measurement '{unit}' and tag '{tagName}'. See inner exception for details.",
+                        ex
+                    );
+                }
+                    
+            }
+            /**/
             foreach (var unit in timeUnits)
             {
                 string every, duration;
